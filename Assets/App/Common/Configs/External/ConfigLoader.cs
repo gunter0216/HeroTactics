@@ -7,13 +7,13 @@ using UnityEngine;
 
 namespace App.Common.Configs.External
 {
-    [Singleton]
+    // [Singleton]
     public class ConfigLoader : IConfigLoader
     {
         public const string PlayerPrefsUseLocalConfigsKey = "TestingPanel_UseLocalConfigs";
 
-        [Inject] private readonly IAssetManager m_AssetManager;
-        [Inject] private readonly IJsonDeserializer m_JsonDeserializer;
+        /*[Inject]*/ private readonly IAssetManager m_AssetManager;
+        /*[Inject]*/ private readonly IJsonDeserializer m_JsonDeserializer;
 
         private bool UseLocalConfigs => PlayerPrefs.GetInt(PlayerPrefsUseLocalConfigsKey, 0) == 1;
 

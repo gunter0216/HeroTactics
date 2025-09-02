@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using App.Common.Autumn.Runtime.Attributes;
 using App.Common.Data.Runtime.Deserializer;
 using App.Common.DataContainer.Runtime;
 using App.Common.FSM.Runtime;
@@ -17,11 +16,11 @@ namespace App.Common.ModuleItem.External
     // [Stage(typeof(GameInitPhase), -100_000)]
     public class ModuleItemsManager : IInitSystem, IModuleItemsManager
     {
-        [Inject] private readonly IContainersDataManager m_ContainersDataManager;
-        [Inject] private readonly List<IModuleDtoToConfigConverter> m_ModuleDtoToConfigConverters;
-        [Inject] private readonly List<ICreateModuleItemHandler> m_Handlers;
-        [Inject] private readonly IJsonDeserializer m_JsonDeserializer;
-        [Inject] private readonly ILogger m_Logger;
+        private readonly IContainersDataManager m_ContainersDataManager;
+        private readonly List<IModuleDtoToConfigConverter> m_ModuleDtoToConfigConverters;
+        private readonly List<ICreateModuleItemHandler> m_Handlers;
+        private readonly IJsonDeserializer m_JsonDeserializer;
+        private readonly ILogger m_Logger;
         
         private ModuleItemsConfigController m_ConfigController;
         private ModuleItemCreator m_ModuleItemCreator;

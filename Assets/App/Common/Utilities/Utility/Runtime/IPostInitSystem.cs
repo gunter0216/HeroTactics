@@ -1,4 +1,4 @@
-﻿namespace App.Common.FSM.Runtime
+﻿namespace App.Common.Utilities.Utility.Runtime
 {
     public interface IPostInitSystem
     {

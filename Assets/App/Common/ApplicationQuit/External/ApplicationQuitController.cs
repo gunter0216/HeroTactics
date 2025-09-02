@@ -5,10 +5,10 @@ using UnityEngine;
 
 namespace App.Common.ApplicationQuit.External
 {
-    [MonoScoped]
+    // [MonoScoped]
     public class ApplicationQuitController : MonoBehaviour
     {
-        [Inject] private IDataManager m_DataManager;
+        /*[Inject]*/ private IDataManager m_DataManager;
 
         private void SaveProgress()
         {
@@ -29,7 +29,6 @@ namespace App.Common.ApplicationQuit.External
 #if UNITY_EDITOR
         private void OnApplicationQuit()
         {
-            Debug.LogError("qqwqeqweqweqweqwe");
             SaveProgress();
         }
 #endif

@@ -8,7 +8,7 @@ using App.Common.Utilities.Utility.Runtime;
 
 namespace App.Common.Data.Runtime
 {
-    public class DataManager : IDataManager
+    public class DataManager : IInitSystem, IDataManager
     {
         private const string m_FileName = "Save.json";
 
@@ -39,6 +39,8 @@ namespace App.Common.Data.Runtime
                 return;
             }
 
+            m_Datas = GlobalDataRegistrator.GetDatas();
+
             m_IsInitialized = true;
             
             m_SaveDirectory = m_DataSavePathCreator.Create();
@@ -59,11 +61,6 @@ namespace App.Common.Data.Runtime
             
             Load(m_FilePath);
             CreateNewDatas();
-        }
-
-        public void SetDatas(List<IData> datas)
-        {
-            m_Datas = datas;
         }
 
         public void SaveProgress()

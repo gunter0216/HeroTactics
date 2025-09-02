@@ -1,19 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using App.Common.Utilities.Utility.Runtime;
 
 namespace App.Common.FSM.Runtime
 {
-    public class DefaultStage : IStage
+    public class DefaultState : IState
     {
-        private readonly string m_Name;
+        private readonly int m_Stage;
         private readonly List<Func<bool>> m_Predicates;
         private List<IInitSystem> m_Systems;
         private List<IPostInitSystem> m_PostInitSystems;
 
-        public DefaultStage(Type type, List<Func<bool>> predicates = null)
+        public DefaultState(int stage, List<Func<bool>> predicates = null)
         {
             m_Predicates = predicates;
-            m_Name = type.Name;
+            m_Stage = stage;
         }
 
         public void SetSystems(List<IInitSystem> systems, List<IPostInitSystem> postInitSystems)
@@ -22,9 +23,9 @@ namespace App.Common.FSM.Runtime
             m_PostInitSystems = postInitSystems;
         }
 
-        public string GetName()
+        public int GetStage()
         {
-            return m_Name;
+            return m_Stage;
         }
 
         public void SyncRun()

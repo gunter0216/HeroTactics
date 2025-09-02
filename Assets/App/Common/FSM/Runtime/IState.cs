@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using App.Common.Utilities.Utility.Runtime;
 
 namespace App.Common.FSM.Runtime
 {
-    public interface IStage
+    public interface IState
     {
         int GetStage();
         void SyncRun();

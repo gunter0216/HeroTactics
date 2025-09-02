@@ -3,7 +3,6 @@ using UnityEngine;
 
 namespace App.Game.Canvases.External
 {
-    [MonoScoped]
     public class PopupCanvas : MonoBehaviour, ICanvas
     {
         public Transform GetContent()
