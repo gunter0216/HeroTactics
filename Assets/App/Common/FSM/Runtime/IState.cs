@@ -4,7 +4,7 @@ namespace App.Common.FSM.Runtime
 {
     public interface IStage
     {
-        string GetName();
+        int GetStage();
         void SyncRun();
         bool IsPredicatesCompleted();
         void SetSystems(List<IInitSystem> systems, List<IPostInitSystem> postInitSystems);
