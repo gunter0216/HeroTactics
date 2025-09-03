@@ -1,15 +1,11 @@
-﻿using TMPro;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace App.Menu.UI.Runtime.View.Panels
+namespace App.Game.Settings.Runtime
 {
-    public class MultiplayerPanel : MonoBehaviour
+    public class SettingsPanel : MonoBehaviour
     {
-        [SerializeField] private TMP_InputField m_UserNameInputField;
-        [SerializeField] private Button m_HostButton;
-        [SerializeField] private Button m_ConnectButton;
         [SerializeField] private Button m_BackButton;
 
         public void SetActive(bool state)

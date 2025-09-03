@@ -5,15 +5,15 @@ using App.Menu.UI.Runtime.View.Panels;
 
 namespace App.Menu.UI.Runtime.States
 {
-    public class CreateGameMenuState : IMenuState, IDisposable
+    public class CreateGameState : IState, IDisposable
     {
         private readonly GameRecordCreateStrategy m_RecordCreateStrategy;
         private readonly CreateGamePanel m_Panel;
-        private readonly MenuMachine m_MenuMachine;
+        private readonly StackStateMachine m_StackStateMachine;
 
-        public CreateGameMenuState(MenuMachine menuMachine, CreateGamePanel panel, GameRecordCreateStrategy recordCreateStrategy)
+        public CreateGameState(StackStateMachine stackStateMachine, CreateGamePanel panel, GameRecordCreateStrategy recordCreateStrategy)
         {
-            m_MenuMachine = menuMachine;
+            m_StackStateMachine = stackStateMachine;
             m_Panel = panel;
             m_RecordCreateStrategy = recordCreateStrategy;
 
@@ -35,7 +35,7 @@ namespace App.Menu.UI.Runtime.States
 
         private void OnBackButtonClick()
         {
-            m_MenuMachine.PopState();
+            m_StackStateMachine.PopState();
         }
 
         private void OnCreateButtonClick()
@@ -44,7 +44,7 @@ namespace App.Menu.UI.Runtime.States
             var status = m_RecordCreateStrategy.Create(name);
             if (status == GameRecordCreateStatus.Successful)
             {
-                m_MenuMachine.PopState();
+                m_StackStateMachine.PopState();
             }
             else
             {

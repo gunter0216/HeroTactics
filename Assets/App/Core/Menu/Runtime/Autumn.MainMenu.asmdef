@@ -5,8 +5,8 @@
     "Autumn.Time",
     "Autumn.Utility",
     "Autumn.Scenes",
-    "Autumn.GameUtility",
-    "Autumn.Settings"
+    "Autumn.Settings",
+    "Autumn.DataManager"
   ],
   "noEngineReferences": true
 }

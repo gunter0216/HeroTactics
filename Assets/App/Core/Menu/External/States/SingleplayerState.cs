@@ -8,11 +8,11 @@ using App.Menu.UI.Runtime.View.Panels.Singleplayer;
 
 namespace App.Menu.UI.Runtime.States
 {
-    public class SingleplayerMenuState : IMenuState, IDisposable
+    public class SingleplayerState : IState, IDisposable
     {
-        private readonly MenuMachine m_MenuMachine;
+        private readonly StackStateMachine m_StackStateMachine;
         private readonly SingleplayerPanel m_SingleplayerPanel;
-        private readonly CreateGameMenuState m_CreateGameMenuState;
+        private readonly CreateGameState m_CreateGameState;
         private readonly GameRecordsDataController m_GameRecordsDataController;
         private readonly IStartGameStrategy m_StartGameStrategy;
 
@@ -21,17 +21,17 @@ namespace App.Menu.UI.Runtime.States
         
         private List<SingleplayerSaveRow> m_ActiveRows;
         
-        public SingleplayerMenuState(MenuMachine menuMachine, 
+        public SingleplayerState(StackStateMachine stackStateMachine, 
             SingleplayerPanel singleplayerPanel, 
-            CreateGameMenuState createGameMenuState, 
+            CreateGameState createGameState, 
             GameRecordsDataController gameRecordsDataController, 
             IStartGameStrategy startGameStrategy)
         {
             m_SingleplayerPanel = singleplayerPanel;
-            m_CreateGameMenuState = createGameMenuState;
+            m_CreateGameState = createGameState;
             m_GameRecordsDataController = gameRecordsDataController;
             m_StartGameStrategy = startGameStrategy;
-            m_MenuMachine = menuMachine;
+            m_StackStateMachine = stackStateMachine;
 
             m_ActiveRows = new List<SingleplayerSaveRow>();
             m_TimeToStringConverter = new TimeToStringConverter();
@@ -47,7 +47,7 @@ namespace App.Menu.UI.Runtime.States
 
         private void OnCreateNewGameButtonClick()
         {
-            m_MenuMachine.PushState(m_CreateGameMenuState);
+            m_StackStateMachine.PushState(m_CreateGameState);
         }
 
         public void Enter()
@@ -82,7 +82,7 @@ namespace App.Menu.UI.Runtime.States
         
         private void OnBackButtonClick()
         {
-            m_MenuMachine.PopState();
+            m_StackStateMachine.PopState();
         }
 
         public void Dispose()

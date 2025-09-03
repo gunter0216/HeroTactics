@@ -4,15 +4,15 @@ using App.Menu.UI.Runtime.View.Panels;
 
 namespace App.Menu.UI.Runtime.States
 {
-    public class MultiplayerMenuState : IMenuState, IDisposable
+    public class MultiplayerState : IState, IDisposable
     {
         private readonly MultiplayerPanel m_MultiplayerPanel;
-        private readonly MenuMachine m_MenuMachine;
+        private readonly StackStateMachine m_StackStateMachine;
 
-        public MultiplayerMenuState(MenuMachine menuMachine, MultiplayerPanel multiplayerPanel)
+        public MultiplayerState(StackStateMachine stackStateMachine, MultiplayerPanel multiplayerPanel)
         {
             m_MultiplayerPanel = multiplayerPanel;
-            m_MenuMachine = menuMachine;
+            m_StackStateMachine = stackStateMachine;
             
             m_MultiplayerPanel.SetActive(false);
             
@@ -31,7 +31,7 @@ namespace App.Menu.UI.Runtime.States
 
         private void OnBackButtonClick()
         {
-            m_MenuMachine.PopState();
+            m_StackStateMachine.PopState();
         }
 
         public void Dispose()
