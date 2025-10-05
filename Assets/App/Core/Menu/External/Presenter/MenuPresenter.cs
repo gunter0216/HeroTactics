@@ -63,6 +63,12 @@ namespace App.Menu.UI.External.Presenter
                 m_SettingsState);
             
             m_StackStateMachine.PushState(m_MainMenuState);
+
+            var record = m_DataController.GetRecords();
+            if (record.Count > 0)
+            {
+                startGameStrategy.StartGame(record[0].Name);   
+            }
             
             return true;
         }
