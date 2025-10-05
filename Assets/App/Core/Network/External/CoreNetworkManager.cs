@@ -1,4 +1,5 @@
-﻿using App.Core.Player.External;
+﻿using App.Common.Logger.Runtime;
+using App.Core.Player.External;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -12,7 +13,7 @@ namespace App.Core.Network.External
         {
             m_NetworkManager = GetComponent<NetworkManager>();
 
-            NetworkManager.Singleton.ConnectionApprovalCallback = ApprovalCheck;
+            m_NetworkManager.ConnectionApprovalCallback = ApprovalCheck;
         }
 
         private void ApprovalCheck(
@@ -50,6 +51,7 @@ namespace App.Core.Network.External
 
         void OnGUI()
         {
+            return;
             GUILayout.BeginArea(new Rect(10, 10, 700, 700));
             if (!m_NetworkManager.IsClient && !m_NetworkManager.IsServer)
             {

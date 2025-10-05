@@ -7,11 +7,19 @@ namespace App.Menu.UI.Runtime.Data
 {
     public class GameRecordsDataController
     {
-        private readonly IGameRecordsData m_Data;
+        private readonly IGameRecordsDataLoader m_DataLoader;
+        
+        private IGameRecordsData m_Data;
         
         public GameRecordsDataController(IGameRecordsDataLoader dataLoader)
         {
-            m_Data = dataLoader.Load();
+            m_DataLoader = dataLoader;
+        }
+
+        public void Initialize()
+        {
+            m_Data = m_DataLoader.Load();
+            m_Data.GameRecords ??= new List<GameRecord>();
         }
 
         public List<GameRecord> GetRecords()

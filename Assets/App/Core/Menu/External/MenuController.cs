@@ -37,6 +37,7 @@ namespace App.Menu.UI.External
         {
             var dataLoader = new GameRecordsDataLoader(m_DataManager);
             m_DataController = new GameRecordsDataController(dataLoader);
+            m_DataController.Initialize();
             
             var viewCreator = new MenuViewCreator(m_AssetManager, m_MainCanvas);
             m_Presenter = new MenuPresenter(viewCreator, m_DataController, m_SceneManager);
