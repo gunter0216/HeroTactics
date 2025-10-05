@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using App.Common.Logger.Runtime;
 using App.Common.Utilities.Utility.Runtime;
 using App.Common.Utilities.Utility.Runtime.Extensions;
+using UnityEngine;
 
 namespace App.Common.FSM.Runtime
 {
@@ -41,7 +41,7 @@ namespace App.Common.FSM.Runtime
                 var systemType = system.GetType();
                 if (!m_Info.TryGetValue(systemType, out var infos))
                 {
-                    HLogger.LogError($"not found info for {systemType.Name}");
+                    Debug.LogError($"not found info for {systemType.Name}");
                     continue;
                 }
 
@@ -74,7 +74,7 @@ namespace App.Common.FSM.Runtime
             var name = state.GetStage();
             if (!m_NameToSystems.TryGetValue(name, out var systems))
             {
-                HLogger.LogError($"Systems not found {name}");
+                Debug.LogError($"Systems not found {name}");
                 return;
             }
             
@@ -96,13 +96,5 @@ namespace App.Common.FSM.Runtime
                 m_States[i].SyncRun();
             }
         }
-
-        // public IEnumerator Run()
-        // {
-        //     for (int i = 0; i < m_States.Count; ++i)
-        //     {
-        //         m_States[i].Run();
-        //     }
-        // }
     }
 }

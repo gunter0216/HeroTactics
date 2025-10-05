@@ -1,5 +1,0 @@
-﻿{
-  "name": "Autumn.ConfigLoader",
-  "references":[ "Autumn.Utility" ],
-  "noEngineReferences": true
-}

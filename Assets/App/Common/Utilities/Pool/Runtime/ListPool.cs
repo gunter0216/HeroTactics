@@ -8,11 +8,11 @@ namespace App.Common.Utilities.Pool.Runtime
     {
         private readonly int m_MaxItems;
         private readonly Func<Optional<T>> m_CreateFunc;
-        private readonly Action<T> m_ActionOnGet;
-        private readonly Action<T> m_ActionOnRelease;
-        private readonly Action<T> m_ActionOnDestroy;
+        private readonly Action<T> m_GetCallback;
+        private readonly Action<T> m_ReleaseCallback;
+        private readonly Action<T> m_DestroyCallback;
         
-        private readonly Action<T> m_ActionOnCreateSuccessful;
+        private readonly Action<T> m_CreateSuccessfulCallback;
 
         private readonly List<T> m_Items;
 
@@ -22,30 +22,30 @@ namespace App.Common.Utilities.Pool.Runtime
             Func<Optional<T>> createFunc, 
             int capacity = 0,
             int maxItems = 100,
-            Action<T> actionOnGet = null, 
-            Action<T> actionOnRelease = null, 
-            Action<T> actionOnDestroy = null)
+            Action<T> getCallback = null, 
+            Action<T> releaseCallback = null, 
+            Action<T> destroyCallback = null)
         {
             m_CreateFunc = createFunc;
             m_MaxItems = maxItems;
-            m_ActionOnGet = actionOnGet;
-            m_ActionOnRelease = actionOnRelease;
-            m_ActionOnDestroy = actionOnDestroy;
+            m_GetCallback = getCallback;
+            m_ReleaseCallback = releaseCallback;
+            m_DestroyCallback = destroyCallback;
             m_Items = new List<T>(capacity);
 
             if (typeof(IPoolItem).IsAssignableFrom(typeof(T)))
             {
-                m_ActionOnCreateSuccessful = itemHolder => ((IPoolItem)itemHolder).ReturnInPool = () => Release(itemHolder);
+                m_CreateSuccessfulCallback = itemHolder => ((IPoolItem)itemHolder).ReturnInPool = () => Release(itemHolder);
             }
             
             if (typeof(IPoolGetListener).IsAssignableFrom(typeof(T)))
             {
-                m_ActionOnGet += item => ((IPoolGetListener)item).OnGetFromPool();
+                m_GetCallback += item => ((IPoolGetListener)item).OnGetFromPool();
             }
             
             if (typeof(IPoolReleaseListener).IsAssignableFrom(typeof(T)))
             {
-                m_ActionOnRelease += item => ((IPoolReleaseListener)item).BeforeReturnInPool();
+                m_ReleaseCallback += item => ((IPoolReleaseListener)item).BeforeReturnInPool();
             }
 
             if (capacity > 0)
@@ -56,13 +56,13 @@ namespace App.Common.Utilities.Pool.Runtime
                     if (item.HasValue)
                     {
                         m_Items.Add(item.Value);
-                        m_ActionOnCreateSuccessful?.Invoke(item.Value);
+                        m_CreateSuccessfulCallback?.Invoke(item.Value);
                     }
                 }
 
                 for (int i = 0; i < m_Items.Count; ++i)
                 {
-                    m_ActionOnRelease?.Invoke(m_Items[i]);
+                    m_ReleaseCallback?.Invoke(m_Items[i]);
                 }
             }
         }
@@ -81,7 +81,7 @@ namespace App.Common.Utilities.Pool.Runtime
                 if (itemResult.HasValue)
                 {
                     item = itemResult.Value;
-                    m_ActionOnCreateSuccessful?.Invoke(itemResult.Value);
+                    m_CreateSuccessfulCallback?.Invoke(itemResult.Value);
                 }
                 else
                 {
@@ -89,7 +89,7 @@ namespace App.Common.Utilities.Pool.Runtime
                 }
             }
 
-            m_ActionOnGet?.Invoke(item);
+            m_GetCallback?.Invoke(item);
             
             return Optional<T>.Success(item);
         }
@@ -97,18 +97,18 @@ namespace App.Common.Utilities.Pool.Runtime
         public bool Release(T item)
         {
             m_Items.Add(item);
-            m_ActionOnRelease?.Invoke(item);
+            m_ReleaseCallback?.Invoke(item);
             
             return true;
         }
 
         public void Dispose()
         {
-            if (m_ActionOnDestroy != null)
+            if (m_DestroyCallback != null)
             {
                 for (int i = 0; i < m_Items.Count; ++i)
                 {
-                    m_ActionOnDestroy.Invoke(m_Items[i]);
+                    m_DestroyCallback.Invoke(m_Items[i]);
                 }
             }
 

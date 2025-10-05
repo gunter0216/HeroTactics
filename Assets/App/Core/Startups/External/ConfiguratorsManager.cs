@@ -1,35 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection;
 using App.Common.AssemblyManager.Runtime;
-using App.Common.Autumn.Runtime.Attributes;
-using App.Common.Autumn.Runtime.Collection;
-using App.Common.Logger.Runtime;
+using App.Common.Data.Runtime;
+using App.Common.FSM.External;
+using App.Core.Startups.External.Attributes;
 using Castle.Core.Internal;
+using UnityEngine;
 using Zenject;
 
 namespace App.Core.Startups.External
 {
     public class ConfiguratorsManager
     {
-        private static ConfiguratorsManager m_Instance;
+        private readonly FSMRegistrar m_FsmRegistrar;
+        private readonly DataRegistrar m_DataRegistrar;
 
-        private readonly Dictionary<int, List<IConfigurator>> m_Configurators = new();
+        private readonly Dictionary<int, List<Configurator>> m_Configurators = new();
 
-        public static ConfiguratorsManager Instance
+        public ConfiguratorsManager(
+            IReadOnlyList<AttributeNode> configurators, 
+            FSMRegistrar fsmRegistrar,
+            DataRegistrar dataRegistrar)
         {
-            get
-            {
-                if (m_Instance == null)
-                {
-                    m_Instance = new ConfiguratorsManager();
-                }
-                
-                return m_Instance;
-            }
+            m_FsmRegistrar = fsmRegistrar;
+            m_DataRegistrar = dataRegistrar;
+
+            SetConfigurators(configurators);
         }
 
-        public void SetConfigurators(IReadOnlyList<AttributeNode> configurators)
+        private void SetConfigurators(IReadOnlyList<AttributeNode> configurators)
         {
             foreach (var configurator in configurators)
             {
@@ -43,23 +42,23 @@ namespace App.Core.Startups.External
             var instance = Activator.CreateInstance(node.Holder);
             foreach (var attribute in attributes)
             {
-                if (instance is IConfigurator configurator)
+                if (instance is Configurator configurator)
                 {
                     SetConfigurator(attribute.Context, configurator);
                 }
                 else
                 {
-                    HLogger.LogError($"Wtf?");
+                    Debug.LogError($"Configurator {node.Holder} is not Configurator");
                     return;
                 }
             }
         }
 
-        private void SetConfigurator(int context, IConfigurator configurator)
+        private void SetConfigurator(int context, Configurator configurator)
         {
             if (!m_Configurators.TryGetValue(context, out var configurators))
             {
-                configurators = new List<IConfigurator>(1);
+                configurators = new List<Configurator>(1);
                 m_Configurators.Add(context, configurators);
             }
             
@@ -75,7 +74,10 @@ namespace App.Core.Startups.External
 
             foreach (var configurator in configurators)
             {
-                configurator.Configuration(container);
+                configurator.SetDiContainer(container);
+                configurator.SetFSMRegistrator(m_FsmRegistrar);
+                configurator.SetDataRegistrator(m_DataRegistrar);
+                configurator.Configuration();
             }
         }
     }

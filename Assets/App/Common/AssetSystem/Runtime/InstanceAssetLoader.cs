@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using App.Common.AssetSystem.Runtime.DestroyStrategy;
-using App.Common.Logger.Runtime;
 using App.Common.Utilities.Utility.Runtime;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -27,7 +26,7 @@ namespace App.Common.AssetSystem.Runtime
             var asset = LoadSync<GameObject>(key);
             if (!asset.HasValue)
             {
-                HLogger.LogError($"Cant load asset = {key}.");
+                Debug.LogError($"Cant load asset = {key}.");
                 return Optional<T>.Empty;
             }
 
@@ -47,7 +46,7 @@ namespace App.Common.AssetSystem.Runtime
         {
             if (!_instantiatedItems.TryGetValue(key, out var hashSet))
             {
-                HLogger.LogError($"Cant unload asset = {key}.");
+                Debug.LogError($"Cant unload asset = {key}.");
                 return;
             }
 

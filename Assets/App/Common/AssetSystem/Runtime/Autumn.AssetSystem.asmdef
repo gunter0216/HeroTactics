@@ -3,7 +3,6 @@
     "references": [
         "Autumn.Utility",
         "Unity.Addressables",
-        "Autumn.Logger",
         "Unity.ResourceManager"
     ]
 }

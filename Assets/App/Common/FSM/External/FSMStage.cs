@@ -3,6 +3,7 @@
     public enum FSMStage : int
     {
         StartInitStage,
-        MenuInitStage
+        CoreInitStage,
+        MenuInitStage,
     }
 }

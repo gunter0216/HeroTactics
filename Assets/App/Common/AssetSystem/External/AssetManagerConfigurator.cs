@@ -1,16 +1,15 @@
-﻿using App.Common.Autumn.Runtime.Attributes;
-using App.Common.Autumn.Runtime.Collection;
-using App.Core.Startups.External;
-using Zenject;
+﻿using App.Core.Startups.External;
+using App.Core.Startups.External.Attributes;
+using App.Core.Startups.External.Constants;
 
 namespace App.Common.AssetSystem.External
 {
     [Configurator(ContextConstants.GlobalContext)]    
-    public class AssetManagerConfigurator : IConfigurator
+    public class AssetManagerConfigurator : Core.Startups.External.Configurator
     {
-        public void Configuration(DiContainer container)
+        public override void Configuration()
         {
-            container.BindInterfacesAndSelfTo<AssetManager>().AsSingle();
+            Container.BindInterfacesAndSelfTo<AssetManager>().AsSingle();
         }
     }
 }

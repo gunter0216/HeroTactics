@@ -1,21 +1,20 @@
-﻿using App.Common.Autumn.Runtime.Attributes;
-using App.Common.Autumn.Runtime.Collection;
-using App.Common.Data.Runtime;
+﻿using App.Common.Data.Runtime;
 using App.Common.FSM.External;
 using App.Core.Startups.External;
-using Zenject;
+using App.Core.Startups.External.Attributes;
+using App.Core.Startups.External.Constants;
 
 namespace App.Common.Data.External
 {
     [Configurator(ContextConstants.GlobalContext)]    
-    public class DataConfigurator : IConfigurator
+    public class DataConfigurator : Core.Startups.External.Configurator
     {
-        public void Configuration(DiContainer container)
+        public override void Configuration()
         {
-            container.BindInterfacesAndSelfTo<DataSavePathCreator>().AsSingle();
-            container.BindInterfacesAndSelfTo<DataManager>().AsSingle();
+            Container.BindInterfacesAndSelfTo<DataSavePathCreator>().AsSingle();
+            Container.BindInterfacesAndSelfTo<DataManager>().AsSingle();
             
-            FSMRegistrator.Register<DataManager>(FSMStage.StartInitStage, 0);
+            FsmRegistrar.Register<DataManager>(FSMStage.StartInitStage, 0);
         }
     }
 }

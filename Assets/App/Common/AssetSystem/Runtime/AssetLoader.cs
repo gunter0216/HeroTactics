@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using App.Common.AssetSystem.Runtime.UnloadStrategy;
-using App.Common.Logger.Runtime;
 using App.Common.Utilities.Utility.Runtime;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -38,7 +37,7 @@ namespace App.Common.AssetSystem.Runtime
             }
             catch (Exception e)
             {
-                HLogger.LogError($"Cant load asset {key}");
+                Debug.LogError($"Cant load asset {key}");
                 // ignored
             }
 
@@ -83,7 +82,7 @@ namespace App.Common.AssetSystem.Runtime
         {
             if (!_loadedAssets.TryGetValue(key, out var assetInfo))
             {
-                HLogger.LogError($"Cant unload asset, asset is not loaded.");
+                Debug.LogError($"Cant unload asset, asset is not loaded.");
                 return;
             }
 
@@ -95,7 +94,7 @@ namespace App.Common.AssetSystem.Runtime
         {
             if (!_loadedAssets.ContainsKey(key))
             {
-                HLogger.LogError($"Cant unload asset, asset is not loaded.");
+                Debug.LogError($"Cant unload asset, asset is not loaded.");
                 return;
             }
         

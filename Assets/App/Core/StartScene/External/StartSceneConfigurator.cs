@@ -1,19 +1,18 @@
-﻿using App.Common.Autumn.Runtime.Attributes;
-using App.Common.Autumn.Runtime.Collection;
-using App.Common.FSM.External;
+﻿using App.Common.FSM.External;
 using App.Core.Startups.External;
-using Zenject;
+using App.Core.Startups.External.Attributes;
+using App.Core.Startups.External.Constants;
 
 namespace App.Core.StartScene.External
 {
     [Configurator(ContextConstants.StartContext)]    
-    public class StartSceneConfigurator : IConfigurator
+    public class StartSceneConfigurator : Configurator
     {
-        public void Configuration(DiContainer container)
+        public override void Configuration()
         {
-            container.BindInterfacesAndSelfTo<StartSceneController>().AsSingle();
+            Container.BindInterfacesAndSelfTo<StartSceneController>().AsSingle();
             
-            FSMRegistrator.Register<StartSceneController>(FSMStage.StartInitStage, 100_100);
+            FsmRegistrar.Register<StartSceneController>(FSMStage.StartInitStage, 100_100);
         }
     }
 }

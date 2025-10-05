@@ -19,8 +19,7 @@ namespace App.Common.Timer.Runtime
             
             m_RealtimeTimers = new ListPool<RealtimeTimer>(
                 createFunc: CreateRealtimeTimer,
-                actionOnRelease: ReleaseTimer,
-                actionOnDestroy: ReleaseTimer);
+                releaseCallback: ReleaseTimer);
         }
 
         public void Run(float deltaTime)

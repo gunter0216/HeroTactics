@@ -15,8 +15,10 @@ namespace App.Menu.UI.Runtime.States
             m_StackStateMachine = stackStateMachine;
             
             m_MultiplayerPanel.SetActive(false);
-            
-            m_MultiplayerPanel.SubscribeToBackButtonClick(OnBackButtonClick);
+
+            m_MultiplayerPanel.SetHostButtonClickCallback(OnHostButtonClick);
+            m_MultiplayerPanel.SetConnectButtonClickCallback(OnConnectButtonClick);
+            m_MultiplayerPanel.SetBackButtonClickCallback(OnBackButtonClick);
         }
 
         public void Enter()
@@ -29,14 +31,39 @@ namespace App.Menu.UI.Runtime.States
             m_MultiplayerPanel.SetActive(false);
         }
 
+        private void OnHostButtonClick()
+        {
+            if (!IsUserNameValid())
+            {
+                return;
+            }
+            
+            // todo
+        }
+
+        private void OnConnectButtonClick()
+        {
+            if (!IsUserNameValid())
+            {
+                return;
+            }
+            
+            // todo
+        }
+
         private void OnBackButtonClick()
         {
             m_StackStateMachine.PopState();
         }
+        
+        private bool IsUserNameValid()
+        {
+            var userName = m_MultiplayerPanel.GetUserName();
+            return !string.IsNullOrEmpty(userName) && userName.Length >= 3;
+        }
 
         public void Dispose()
         {
-            m_MultiplayerPanel?.UnSubscribeToBackButtonClick(OnBackButtonClick);
         }
     }
 }

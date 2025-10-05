@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using App.Common.Logger.Runtime;
+using UnityEngine;
 
 namespace App.Common.AssemblyManager.Runtime
 {
@@ -21,7 +20,7 @@ namespace App.Common.AssemblyManager.Runtime
                 return nodes;
             }
 
-            HLogger.LogError($"{nameof(T)} types not found.");
+            Debug.LogError($"{nameof(T)} types not found.");
             return new List<AttributeNode>();
         }
     }

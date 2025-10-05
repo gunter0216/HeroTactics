@@ -1,17 +1,15 @@
-﻿using App.Common.Autumn.Runtime.Attributes;
-using App.Common.Autumn.Runtime.Collection;
-using App.Common.Logger.Runtime;
-using App.Core.Startups.External;
-using Zenject;
+﻿using App.Common.Logger.Runtime;
+using App.Core.Startups.External.Attributes;
+using App.Core.Startups.External.Constants;
 
 namespace App.Common.Logger.External
 {
     [Configurator(ContextConstants.GlobalContext)]    
-    public class LoggerConfigurator : IConfigurator
+    public class LoggerConfigurator : Core.Startups.External.Configurator
     {
-        public void Configuration(DiContainer container)
+        public override void Configuration()
         {
-            container.Bind<ILogger>().To<Runtime.Logger>().AsSingle();
+            Container.Bind<ILogger>().To<Runtime.Logger>().AsSingle();
         }
     }
 }

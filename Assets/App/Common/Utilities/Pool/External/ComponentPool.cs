@@ -28,17 +28,17 @@ namespace App.Common.Utilities.Pool.External
                     onCreate?.Invoke(item);
                     return Optional<T>.Success(item);
                 },
-                actionOnGet: (item) =>
+                getCallback: (item) =>
                 {
                     item.gameObject.SetActive(true);
                     onGet?.Invoke(item);
                 },
-                actionOnRelease: (item) =>
+                releaseCallback: (item) =>
                 {
                     item.gameObject.SetActive(false);
                     onRelease?.Invoke(item);
                 },
-                actionOnDestroy: (item) =>
+                destroyCallback: (item) =>
                 {
                     onDestroy?.Invoke(item);
                 },

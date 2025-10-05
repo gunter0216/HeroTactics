@@ -18,7 +18,7 @@ namespace App.Menu.UI.Runtime
         public void StartGame(string name)
         {
             m_DataController.SetLastLogin(name, TimeHelper.Now.Ticks);
-            m_SceneManager.LoadScene(SceneConstants.GameScene);
+            m_SceneManager.LoadScene(SceneConstants.CoreScene);
         }
     }
 }
