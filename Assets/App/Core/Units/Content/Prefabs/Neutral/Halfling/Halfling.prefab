@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1720932955950659943}
   - component: {fileID: 5285037616514670623}
   m_Layer: 0
-  m_Name: Skeleton
+  m_Name: Halfling
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 852001325, guid: a5d43dd1754e0ab4ab7841c8c4e36a17, type: 3}
+  m_Sprite: {fileID: -482972684, guid: 0a482c4bb94edb144927c52fb1ddfab9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -95,7 +95,7 @@ Animator:
   m_GameObject: {fileID: 4550078796177441976}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: b9280cd846e6d404d93c8952d2d11744, type: 2}
+  m_Controller: {fileID: 9100000, guid: 1707a4d8396ab164ca8b5c7c5520163a, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
