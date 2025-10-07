@@ -36,7 +36,6 @@ namespace App.Menu.UI.External.Presenter
 
         public bool Initialize()
         {
-            HLogger.LogError("qweqweq");
             if (!CreateView())
             {
                 return false;
@@ -63,12 +62,14 @@ namespace App.Menu.UI.External.Presenter
                 m_SettingsState);
             
             m_StackStateMachine.PushState(m_MainMenuState);
-
+            
             var record = m_DataController.GetRecords();
-            if (record.Count > 0)
+            if (record.Count <= 0)
             {
-                startGameStrategy.StartGame(record[0].Name);   
+                gameRecordCreateStrategy.Create("Test");
             }
+            
+            startGameStrategy.StartGame(record[0].Name);   
             
             return true;
         }

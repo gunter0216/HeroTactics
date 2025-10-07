@@ -27,6 +27,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d059c49e7ad042abb2ee73017ea002a1
+    m_Address: ArmyConfig
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e77a7866b86bdbc4d910ca4d31d3222d
     m_Address: MenuView
     m_ReadOnly: 0

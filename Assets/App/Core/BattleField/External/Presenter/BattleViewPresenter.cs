@@ -1,5 +1,6 @@
 ﻿using App.Core.BattleField.External.View;
 using App.Menu.UI.External.Fabric;
+using UnityEngine;
 
 namespace App.Battle.UI.External.Presenter
 {
@@ -34,6 +35,11 @@ namespace App.Battle.UI.External.Presenter
 
             m_View = view.Value;
             return true;
+        }
+        
+        public Vector2 GetPositionForUnit(int rowIndex, int columnIndex)
+        {
+            return m_View.FieldView.GetPosition(rowIndex, columnIndex);
         }
     }
 }

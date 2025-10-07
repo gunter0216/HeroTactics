@@ -44,7 +44,9 @@ namespace App.Core.Army.Runtime.Data
         {
             if (m_Data.Army.Length < index + 1)
             {
+                var previous = m_Data.Army;
                 m_Data.Army = new ArmyUnitData[index + 1];
+                Array.Copy(previous, m_Data.Army, previous.Length);
             }
             else if (m_Data.Army[index] != null)
             {

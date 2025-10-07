@@ -9,7 +9,7 @@ using App.Core.Army.Runtime.Data;
 
 namespace App.Menu.UI.External
 {
-    public class ArmyController : IInitSystem, IDisposable
+    public class ArmyController : IInitSystem, IDisposable, IArmyController
     {
         private readonly IConfigLoader m_ConfigLoader;
         private readonly IDataManager m_DataManager;

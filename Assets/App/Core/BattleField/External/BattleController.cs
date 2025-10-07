@@ -1,13 +1,10 @@
 ﻿using System;
 using App.Battle.UI.External.Presenter;
 using App.Common.AssetSystem.Runtime;
-using App.Common.Logger.Runtime;
 using App.Common.Utilities.Utility.Runtime;
+using App.Core.BattleField.Runtime.Services;
 using App.Game.Canvases.External;
-using App.Menu.UI.External.Data;
 using App.Menu.UI.External.Fabric;
-using App.Menu.UI.External.Presenter;
-using App.Menu.UI.Runtime.Data;
 
 namespace App.Menu.UI.External
 {
@@ -15,21 +12,31 @@ namespace App.Menu.UI.External
     {
         private readonly MainCanvas m_MainCanvas;
         private readonly IAssetManager m_AssetManager;
+        private readonly IArmyController m_ArmyController;
 
         private BattleViewPresenter m_Presenter;
-        
+        private BattleUnitsService m_BattleUnitsService;
+        private BattlePlayer m_BattlePlayer;
+
         public BattleController(
             MainCanvas mainCanvas, 
-            IAssetManager assetManager)
+            IAssetManager assetManager, 
+            IArmyController armyController)
         {
             m_MainCanvas = mainCanvas;
             m_AssetManager = assetManager;
+            m_ArmyController = armyController;
         }
 
         public void Init()
         {
             m_Presenter = new BattleViewPresenter(new BattleViewCreator(m_AssetManager, m_MainCanvas));
             m_Presenter.Initialize();
+
+            m_BattleUnitsService = new BattleUnitsService(m_ArmyController);
+
+            m_BattlePlayer = new BattlePlayer(m_BattleUnitsService, m_Presenter, m_AssetManager);
+            m_BattlePlayer.StartBattle();
         }
 
         public void Dispose()

@@ -14,7 +14,7 @@ namespace App.Common.Data.External
             Container.BindInterfacesAndSelfTo<DataSavePathCreator>().AsSingle();
             Container.BindInterfacesAndSelfTo<DataManager>().AsSingle();
             
-            FsmRegistrar.Register<DataManager>(FSMStage.StartInitStage, 0);
+            FsmRegistrar.Register<DataManager>(FSMStage.StartInitStage, StartStageOrders.Data);
         }
     }
 }

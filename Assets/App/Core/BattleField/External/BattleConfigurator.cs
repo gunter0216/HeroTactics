@@ -13,7 +13,7 @@ namespace App.Menu.UI.External
         {
             Container.BindInterfacesAndSelfTo<BattleController>().AsSingle();
             
-            FsmRegistrar.Register<BattleController>(FSMStage.CoreInitStage, 0);
+            FsmRegistrar.Register<BattleController>(FSMStage.CoreInitStage, CoreStageOrders.BattleField);
         }
     }
 }
