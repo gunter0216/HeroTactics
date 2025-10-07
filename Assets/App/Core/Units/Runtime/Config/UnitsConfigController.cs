@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using App.Common.Configs.Runtime;
+using App.Common.Logger.Runtime;
+using App.Common.Utilities.Utility.Runtime;
 
 namespace App.Core.Units.Runtime.Config
 {
@@ -30,6 +32,17 @@ namespace App.Core.Units.Runtime.Config
                 var config = new UnitConfig(unitDto);
                 m_UnitConfigs.Add(config.Key, config);
             }
+        }
+
+        public Optional<UnitConfig> GetUnitConfig(string key)
+        {
+            if (!m_UnitConfigs.TryGetValue(key, out var config))
+            {
+                HLogger.LogError("UnitsConfigController: Unit config with key '{0}' not found!");
+                return Optional<UnitConfig>.Fail();
+            }
+            
+            return Optional<UnitConfig>.Success(config);
         }
     }
 }

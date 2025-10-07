@@ -3,6 +3,22 @@
     {
       "key": "Skeleton",
       "asset": "Skeleton"
+    },
+    {
+      "key": "Marksman",
+      "asset": "Marksman"
+    },
+    {
+      "key": "Halberdier",
+      "asset": "Halberdier"
+    },
+    {
+      "key": "Halfling",
+      "asset": "Halfling"
+    },
+    {
+      "key": "Rogue",
+      "asset": "Rogue"
     }
   ]
 }

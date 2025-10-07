@@ -17,6 +17,21 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 9e3411821d6bfb247b0fe20b25dcaad1
   m_SerializeEntries:
+  - m_GUID: 0330b6a1c41d5ff42a4430d682ffbaaa
+    m_Address: Marksman
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0d10276e96b7dd648a48361afcc82358
+    m_Address: Rogue
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 42c5d98e773396c428c3b7efee9cdd7c
+    m_Address: Halfling
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4e920fa33e7e436d83f6519fc1cb81e2
     m_Address: UnitsConfig
     m_ReadOnly: 0
@@ -24,6 +39,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8444ef8f5b8636745a30e33192a63fe4
     m_Address: Skeleton
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bc5f05d27812ecd41a23c5149614e278
+    m_Address: Halberdier
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
