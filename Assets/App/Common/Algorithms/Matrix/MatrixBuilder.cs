@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace App.Generation.DungeonGenerator.Runtime.Matrix
+namespace App.Common.Algorithms.Matrix
 {
     public class MatrixBuilder<T>
     {

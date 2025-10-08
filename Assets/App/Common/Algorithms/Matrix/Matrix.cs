@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using App.Common.Utilities.Utility.Runtime.Extensions;
 
-namespace App.Generation.DungeonGenerator.Runtime.Matrix
+namespace App.Common.Algorithms.Matrix
 {
     public class Matrix : Matrix<int>
     {
