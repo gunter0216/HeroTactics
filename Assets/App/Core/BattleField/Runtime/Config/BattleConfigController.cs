@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using App.Common.Configs.Runtime;
+using App.Common.Logger.Runtime;
 
 namespace App.Core.BattleField.Runtime.Config
 {
@@ -28,5 +30,16 @@ namespace App.Core.BattleField.Runtime.Config
         public int GetWidth() => m_BattleConfig.Width;
         public int GetHeight() => m_BattleConfig.Height;
         public IReadOnlyList<BattleInfoConfig> GetBattles() => m_BattleConfig.Battles;
+        public IReadOnlyList<int> GetUnitPositions(int unitsCount)
+        {
+            var index = unitsCount - 1;
+            if (index < 0 || index >= m_BattleConfig.UnitPositions.Length)
+            {
+                HLogger.LogError("Invalid units count: " + unitsCount);
+                return Array.Empty<int>();
+            }
+            
+            return m_BattleConfig.UnitPositions[index];
+        }
     }
 }

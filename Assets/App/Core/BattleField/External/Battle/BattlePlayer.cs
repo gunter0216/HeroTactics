@@ -43,7 +43,7 @@ namespace App.Menu.UI.External
             {
                 for (int y = 0; y < height; ++y)
                 {
-                    m_Matrix[x, y] = new BattleFieldCell(x, y);
+                    m_Matrix[y, x] = new BattleFieldCell(y, x);
                 }
             }
         }
@@ -71,10 +71,13 @@ namespace App.Menu.UI.External
         private IEnumerator UpdateUnitPositions()
         {
             yield return new WaitForEndOfFrame();
-            foreach (var unit in m_Units)
+            var positions = m_ConfigController.GetUnitPositions(m_Units.Count);
+            m_Units.Sort((x, y) => x.Unit.Unit.Position.CompareTo(y.Unit.Unit.Position));
+            for (int i = 0; i < m_Units.Count; ++i)
             {
-                var position = unit.Unit.Unit.Position;
-                unit.View.transform.position = m_BattleViewPresenter.GetPositionForUnit(position, 0);
+                var unit = m_Units[i];
+                var col = positions[i];
+                unit.View.transform.position = m_BattleViewPresenter.GetPositionForUnit(col, 0);
             }
         }
 
