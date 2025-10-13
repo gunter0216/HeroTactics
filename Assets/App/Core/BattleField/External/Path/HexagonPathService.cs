@@ -12,82 +12,17 @@ namespace App.Core.BattleField.External.Path
 
         private readonly HexagonInfo m_HexagonInfo = new();
         private readonly HexagonPathFinder m_PathFinder;
+        private readonly HexagonLiMatrixCreator m_LiMatrixCreator;
         
-        private Matrix<int> m_Matrix;
-        private List<Vector2Int> m_ActiveCells;
-
         public HexagonPathService()
         {
-            m_ActiveCells = new List<Vector2Int>(10);
+            m_LiMatrixCreator = new HexagonLiMatrixCreator(m_HexagonInfo);
             m_PathFinder = new HexagonPathFinder(m_HexagonInfo);
-            // m_PathFinderMatrixCreator = new PathFinderMatrixCreator(
-            //     wall, 
-            //     empty, 
-            //     horizontalWall, 
-            //     verticalWall);
-            // m_PathBuilder = new PathBuilder();
         }
 
         public Optional<Matrix<int>> CreateLiMatrix(Matrix<int> collidersMatrix, Vector2Int from, int range)
         {
-            // if (m_Matrix == null ||
-            //     m_Matrix.Width != collidersMatrix.Width ||
-            //     m_Matrix.Height != collidersMatrix.Height)
-            // {
-            //     m_Matrix = new Matrix<int>(collidersMatrix.Width, collidersMatrix.Height);
-            // }
-
-            m_Matrix = new Matrix<int>(collidersMatrix);
-            
-            m_Matrix.SetCell(from.Y, from.X, 0);
-            m_ActiveCells.Clear();
-            m_ActiveCells.Add(from);
-            for (int i = 0; i < 100; ++i)
-            {
-                if (m_ActiveCells.Count <= 0)
-                {
-                    break;
-                }
-                
-                NextIteration(range);
-            }
-            
-            return Optional<Matrix<int>>.Success(new Matrix<int>(m_Matrix));
-        }
-
-        private void NextIteration(int range)
-        {
-            var newActiveCells = new List<Vector2Int>(m_ActiveCells.Capacity);
-            foreach (var activeCell in m_ActiveCells)
-            {
-                var offsets = m_HexagonInfo.GetOffsets(activeCell.Y);
-                foreach (var offset in offsets)
-                {
-                    var newPos = activeCell + offset;
-                    var row = newPos.Y;
-                    var col = newPos.X;
-                    if (!m_Matrix.IsCorrectPos(row, col))
-                    {
-                        continue;
-                    }
-
-                    var value = m_Matrix.GetCell(row, col);
-                    if (value != Empty)
-                    {
-                        continue;
-                    }
-                    
-                    var prevValue = m_Matrix.GetCell(activeCell.Y, activeCell.X);
-                    var newValue = prevValue + 1;
-                    m_Matrix.SetCell(row, col, newValue);
-                    if (newValue < range)
-                    {
-                        newActiveCells.Add(newPos);
-                    }
-                }
-            }
-            
-            m_ActiveCells = newActiveCells;
+            return m_LiMatrixCreator.CreateLiMatrix(collidersMatrix, from, range);
         }
 
         public Optional<List<Vector2Int>> BuildPath(
@@ -97,24 +32,5 @@ namespace App.Core.BattleField.External.Path
         {
             return m_PathFinder.BuildPath(matrix, from, to);
         }
-
-        // public Optional<List<Position>> FindPath(
-        //     Matrix inputMatrix,
-        //     Position from,
-        //     Position to)
-        // {
-        //     m_From = from;
-        //     m_To = to;
-        //     m_Matrix = new Matrix(inputMatrix);
-        //
-        //     if (!IsCorrectMatrix(inputMatrix))
-        //     {
-        //         return Optional<List<Position>>.Fail();
-        //     }
-        //
-        //     return Optional<List<Position>>.Fail();
-        //     // m_PathFinderMatrixCreator.PreCalc(m_Matrix, m_From, m_To);
-        //     // return m_PathBuilder.BuildPath(m_Matrix, m_From, m_To, m_InputCellValues);
-        // }
     }
 }
