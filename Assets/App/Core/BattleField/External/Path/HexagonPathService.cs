@@ -7,35 +7,19 @@ namespace App.Core.BattleField.External.Path
 {
     public class HexagonPathService
     {
-        private readonly Vector2Int[] m_OddOffsets =
-        {
-            new Vector2Int( -1, 0 ), 
-            new Vector2Int( -1, -1 ), 
-            new Vector2Int( 0, -1 ), 
-            new Vector2Int( 1, 0 ), 
-            new Vector2Int( -1, 1 ), 
-            new Vector2Int( 0, 1 )
-        };
-        
-        private readonly Vector2Int[] m_EvenOffsets =
-        {
-            new Vector2Int( -1, 0 ), 
-            new Vector2Int( 0, -1 ), 
-            new Vector2Int( 1, -1 ), 
-            new Vector2Int( 1, 0 ), 
-            new Vector2Int( 0, 1 ), 
-            new Vector2Int( 1, 1 )
-        };
-        
         public const int Empty = -1;
         public const int Wall = -2;
 
+        private readonly HexagonInfo m_HexagonInfo = new();
+        private readonly HexagonPathFinder m_PathFinder;
+        
         private Matrix<int> m_Matrix;
         private List<Vector2Int> m_ActiveCells;
 
         public HexagonPathService()
         {
             m_ActiveCells = new List<Vector2Int>(10);
+            m_PathFinder = new HexagonPathFinder(m_HexagonInfo);
             // m_PathFinderMatrixCreator = new PathFinderMatrixCreator(
             //     wall, 
             //     empty, 
@@ -56,6 +40,7 @@ namespace App.Core.BattleField.External.Path
             m_Matrix = new Matrix<int>(collidersMatrix);
             
             m_Matrix.SetCell(from.Y, from.X, 0);
+            m_ActiveCells.Clear();
             m_ActiveCells.Add(from);
             for (int i = 0; i < 100; ++i)
             {
@@ -75,7 +60,7 @@ namespace App.Core.BattleField.External.Path
             var newActiveCells = new List<Vector2Int>(m_ActiveCells.Capacity);
             foreach (var activeCell in m_ActiveCells)
             {
-                var offsets = (activeCell.Y % 2 == 0) ? m_EvenOffsets : m_OddOffsets;
+                var offsets = m_HexagonInfo.GetOffsets(activeCell.Y);
                 foreach (var offset in offsets)
                 {
                     var newPos = activeCell + offset;
@@ -103,6 +88,14 @@ namespace App.Core.BattleField.External.Path
             }
             
             m_ActiveCells = newActiveCells;
+        }
+
+        public Optional<List<Vector2Int>> BuildPath(
+            Matrix<int> matrix,
+            Vector2Int from,
+            Vector2Int to)
+        {
+            return m_PathFinder.BuildPath(matrix, from, to);
         }
 
         // public Optional<List<Position>> FindPath(

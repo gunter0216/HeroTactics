@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using App.Common.Algorithms.Matrix;
 using App.Common.AssetSystem.Runtime;
+using App.Common.Logger.Runtime;
 using App.Common.Utilities.External;
 using App.Common.Utilities.Utility.Runtime;
 using App.Core.BattleField.External.Path;
@@ -25,7 +27,8 @@ namespace App.Core.BattleField.External.Battle
         private Matrix<TilePresenter> m_Matrix;
         private Matrix<int> m_CollidersMatrix;
         private HexagonPathService m_HexagonPathService = new();
-        
+        private Matrix<int> m_LiMatrix;
+
         public BattlePlayer(
             BattleUnitsService battleUnitsService, 
             BattleViewPresenter battleViewPresenter, 
@@ -62,7 +65,18 @@ namespace App.Core.BattleField.External.Battle
 
         private void OnTileClick(TilePresenter presenter)
         {
-            // todo
+            var unit = m_Units.First();
+            var to = new Vector2Int(presenter.X, presenter.Y);
+            var path = m_HexagonPathService.BuildPath(m_LiMatrix, unit.Position, to);
+            if (!path.HasValue)
+            {
+                HLogger.LogError("Failed to build path");
+                return;
+            }
+            
+            unit.Position = to;
+            UpdateUnitPosition(unit);
+            TestMatrix();
         }
 
         public void StartBattle()
@@ -104,19 +118,20 @@ namespace App.Core.BattleField.External.Battle
         private void TestMatrix()
         {
             var colliderMatrix = CreateCollidersMatrix();
-            var liMatrixOpt = m_HexagonPathService.CreateLiMatrix(colliderMatrix, new Vector2Int(2, 2), 10);
+            var unit = m_Units.First();
+            var liMatrixOpt = m_HexagonPathService.CreateLiMatrix(colliderMatrix, unit.Position, 5);
             if (!liMatrixOpt.HasValue)
             {
                 Debug.LogError("Failed to create li matrix");
                 return;
             }
 
-            var liMatrix = liMatrixOpt.Value;
-            for (int row = 0; row < liMatrix.Height; ++row)
+            m_LiMatrix = liMatrixOpt.Value;
+            for (int row = 0; row < m_LiMatrix.Height; ++row)
             {
-                for (int col = 0; col < liMatrix.Width; ++col)
+                for (int col = 0; col < m_LiMatrix.Width; ++col)
                 {
-                    var cellValue = liMatrix[row, col];
+                    var cellValue = m_LiMatrix[row, col];
                     var tile = m_Matrix[row, col];
                     if (cellValue <= 0)
                     {
@@ -149,9 +164,14 @@ namespace App.Core.BattleField.External.Battle
             for (int i = 0; i < m_Units.Count; ++i)
             {
                 var unit = m_Units[i];
-                var position = unit.Position;
-                unit.View.transform.position = m_BattleViewPresenter.GetPositionForUnit(position.Y, position.X);
+                UpdateUnitPosition(unit);
             }
+        }
+
+        private void UpdateUnitPosition(BattleUnitPresenter unit)
+        {
+            var position = unit.Position;
+            unit.View.transform.position = m_BattleViewPresenter.GetPositionForUnit(position.Y, position.X);
         }
 
         public Optional<Transform> CreateView(BattleUnit unit)
