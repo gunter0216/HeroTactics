@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using App.Battle.UI.External.Presenter;
 using App.Common.Algorithms.Matrix;
 using App.Common.AssetSystem.Runtime;
+using App.Common.Logger.Runtime;
 using App.Common.Utilities.External;
 using App.Common.Utilities.Utility.Runtime;
 using App.Core.BattleField.Runtime.Config;
 using App.Core.BattleField.Runtime.Services;
 using App.Core.BattleField.Runtime.Units;
+using App.Game.DungeonGenerator.Runtime.PathFinders;
+using Palmmedia.ReportGenerator.Core.Parser.Analysis;
 using UnityEngine;
+using Vector2Int = App.Common.Algorithms.Runtime.Vector2Int;
 
 namespace App.Menu.UI.External
 {
@@ -20,7 +24,9 @@ namespace App.Menu.UI.External
         private readonly IAssetManager m_AssetManager;
 
         private List<BattleUnitPresenter> m_Units;
-        private Matrix<BattleFieldCell> m_Matrix;
+        private Matrix<TilePresenter> m_Matrix;
+        private Matrix<int> m_CollidersMatrix;
+        private HexagonPathService m_HexagonPathService = new();
         
         public BattlePlayer(
             BattleUnitsService battleUnitsService, 
@@ -36,16 +42,22 @@ namespace App.Menu.UI.External
 
         public void Initialize()
         {
+            var view = m_BattleViewPresenter.GetFieldView();
             var width = m_ConfigController.GetWidth();
             var height = m_ConfigController.GetHeight();
-            m_Matrix = new Matrix<BattleFieldCell>(width, height);
-            for (int x = 0; x < width; ++x)
+            m_Matrix = new Matrix<TilePresenter>(width, height);
+            for (int row = 0; row < view.RowViews.Length; ++row)
             {
-                for (int y = 0; y < height; ++y)
+                var rowView = view.RowViews[row];
+                for (int col = 0; col < rowView.TileViews.Length; ++col)
                 {
-                    m_Matrix[y, x] = new BattleFieldCell(y, x);
+                    var colView = rowView.TileViews[col];
+                    m_Matrix[row, col] = new TilePresenter(colView, col, row);
                 }
             }
+            
+            m_CollidersMatrix = new Matrix<int>(width, height);
+            m_CollidersMatrix.Fill(HexagonPathService.Empty);
         }
 
         public void StartBattle()
@@ -64,20 +76,76 @@ namespace App.Menu.UI.External
                 var unitPresenter = new BattleUnitPresenter(battleUnit, view.Value);
                 m_Units.Add(unitPresenter);
             }
+
+            PlaceUnits();
             
             GlobalCoroutineProvider.DoCoroutine(UpdateUnitPositions());
+
+            TestMatrix();
         }
 
-        private IEnumerator UpdateUnitPositions()
+        private void PlaceUnits()
         {
-            yield return new WaitForEndOfFrame();
             var positions = m_ConfigController.GetUnitPositions(m_Units.Count);
             m_Units.Sort((x, y) => x.Unit.Unit.Position.CompareTo(y.Unit.Unit.Position));
             for (int i = 0; i < m_Units.Count; ++i)
             {
                 var unit = m_Units[i];
                 var col = positions[i];
-                unit.View.transform.position = m_BattleViewPresenter.GetPositionForUnit(col, 0);
+                unit.Position = new Vector2Int(2, col);
+            }
+        }
+
+        private void TestMatrix()
+        {
+            var colliderMatrix = CreateCollidersMatrix();
+            var liMatrixOpt = m_HexagonPathService.CreateLiMatrix(colliderMatrix, new Vector2Int(2, 2), 10);
+            if (!liMatrixOpt.HasValue)
+            {
+                Debug.LogError("Failed to create li matrix");
+                return;
+            }
+
+            var liMatrix = liMatrixOpt.Value;
+            for (int row = 0; row < liMatrix.Height; ++row)
+            {
+                for (int col = 0; col < liMatrix.Width; ++col)
+                {
+                    var cellValue = liMatrix[row, col];
+                    var tile = m_Matrix[row, col];
+                    if (cellValue <= 0)
+                    {
+                        tile.StayDefault();
+                    }
+                    else
+                    {
+                        tile.StayLight();
+                    }
+                }
+            }
+        }
+
+        private Matrix<int> CreateCollidersMatrix()
+        {
+            var matrix = new Matrix<int>(m_Matrix.Width, m_Matrix.Height);
+            matrix.Fill(HexagonPathService.Empty);
+            foreach (var unit in m_Units)
+            {
+                var pos = unit.Position;
+                matrix[pos.Y, pos.X] = HexagonPathService.Wall;
+            }
+            
+            return matrix;
+        }
+
+        private IEnumerator UpdateUnitPositions()
+        {
+            yield return new WaitForEndOfFrame();
+            for (int i = 0; i < m_Units.Count; ++i)
+            {
+                var unit = m_Units[i];
+                var position = unit.Position;
+                unit.View.transform.position = m_BattleViewPresenter.GetPositionForUnit(position.Y, position.X);
             }
         }
 

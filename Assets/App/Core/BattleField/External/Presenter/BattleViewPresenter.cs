@@ -1,4 +1,5 @@
 ﻿using App.Core.BattleField.External.View;
+using App.Core.Field.External.View;
 using App.Menu.UI.External.Fabric;
 using UnityEngine;
 
@@ -40,6 +41,11 @@ namespace App.Battle.UI.External.Presenter
         public Vector2 GetPositionForUnit(int rowIndex, int columnIndex)
         {
             return m_View.FieldView.GetPosition(rowIndex, columnIndex);
+        }
+        
+        public FieldView GetFieldView()
+        {
+            return m_View.FieldView;
         }
     }
 }
