@@ -1,10 +1,14 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace App.Core.Field.External.View
 {
-    public class TileView : MonoBehaviour
+    public class TileView : MonoBehaviour, IPointerClickHandler
     {
         [SerializeField] private GameObject m_Light;
+        
+        private event Action m_OnClick;  
         
         public Vector2 GetPosition()
         {
@@ -19,6 +23,16 @@ namespace App.Core.Field.External.View
         public void StayDefault()
         {
             m_Light.SetActive(false);
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            m_OnClick?.Invoke();
+        }
+        
+        public void SetClickCallback(Action callback)
+        {
+            m_OnClick = callback;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using App.Core.Field.External.View;
+﻿using System;
+using App.Core.Field.External.View;
 
 namespace App.Menu.UI.External
 {
@@ -7,16 +8,33 @@ namespace App.Menu.UI.External
         private readonly int m_X;
         private readonly int m_Y;
         private readonly TileView m_View;
+        
+        private event Action<TilePresenter> m_OnClickCallback;
 
         public int X => m_X;
         public int Y => m_Y;
         public TileView View => m_View;
 
-        public TilePresenter(TileView view, int x, int y)
+        public TilePresenter(
+            TileView view, 
+            int x, 
+            int y,
+            Action<TilePresenter> onClickCallback)
         {
             m_X = x;
             m_Y = y;
+            m_OnClickCallback = onClickCallback;
             m_View = view;
+        }
+
+        public void Initialize()
+        {
+            m_View.SetClickCallback(OnClick);
+        }
+
+        private void OnClick()
+        {
+            m_OnClickCallback?.Invoke(this);
         }
 
         public void StayLight()

@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using App.Battle.UI.External.Presenter;
 using App.Common.Algorithms.Matrix;
 using App.Common.AssetSystem.Runtime;
-using App.Common.Logger.Runtime;
 using App.Common.Utilities.External;
 using App.Common.Utilities.Utility.Runtime;
 using App.Core.BattleField.Runtime.Config;
 using App.Core.BattleField.Runtime.Services;
 using App.Core.BattleField.Runtime.Units;
 using App.Game.DungeonGenerator.Runtime.PathFinders;
-using Palmmedia.ReportGenerator.Core.Parser.Analysis;
 using UnityEngine;
 using Vector2Int = App.Common.Algorithms.Runtime.Vector2Int;
 
@@ -52,12 +50,19 @@ namespace App.Menu.UI.External
                 for (int col = 0; col < rowView.TileViews.Length; ++col)
                 {
                     var colView = rowView.TileViews[col];
-                    m_Matrix[row, col] = new TilePresenter(colView, col, row);
+                    var presenter = new TilePresenter(colView, col, row, OnTileClick);
+                    presenter.Initialize();
+                    m_Matrix[row, col] = presenter;
                 }
             }
             
             m_CollidersMatrix = new Matrix<int>(width, height);
             m_CollidersMatrix.Fill(HexagonPathService.Empty);
+        }
+
+        private void OnTileClick(TilePresenter presenter)
+        {
+            // todo
         }
 
         public void StartBattle()
