@@ -5,7 +5,7 @@ using App.Core.Startups.External;
 using App.Core.Startups.External.Attributes;
 using App.Core.Startups.External.Constants;
 
-namespace App.Common.Configs.External
+namespace App.Common.DataContainer.External
 {
     [Configurator(ContextConstants.GlobalContext)]    
     public class DataContainersConfigurator : Core.Startups.External.Configurator

@@ -1,7 +1,7 @@
-using Core.Currency.Calculator.Runtime;
+using App.Common.Currency.Runtime.Calculator;
 using NUnit.Framework;
 
-namespace Core.Currency.Calculator.Tests.Editor
+namespace App.Common.Currency.Tests
 {
     public class CalculatorTests
     {

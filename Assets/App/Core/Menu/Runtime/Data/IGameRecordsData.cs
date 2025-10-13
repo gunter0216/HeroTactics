@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace App.Menu.UI.Runtime.Data
+namespace App.Core.Menu.Runtime.Data
 {
     public interface IGameRecordsData
     {

@@ -1,4 +1,4 @@
-namespace Core.Currency.Calculator.Runtime
+namespace App.Common.Currency.Runtime.Calculator
 {
     public struct CalculationResult
     {

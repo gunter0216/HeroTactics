@@ -1,4 +1,4 @@
-﻿namespace App.Menu.UI.Runtime
+﻿namespace App.Core.Menu.Runtime
 {
     public interface IStartGameStrategy
     {

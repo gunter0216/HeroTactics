@@ -1,7 +1,7 @@
 ﻿using App.Common.DataContainer.Runtime;
 using App.Common.Utilities.Utility.Runtime;
 
-namespace App.Core.Unts.Runtime.Data
+namespace App.Core.Units.Runtime.Data
 {
     public class UnitsDataController
     {

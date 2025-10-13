@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using App.Common.Data.Runtime.Deserializer;
+using App.Common.Json.Runtime.Deserializer;
 using App.Common.Utilities.Utility.Runtime;
 using UnityEngine;
 using UnityEngine.Networking;

@@ -1,6 +1,6 @@
 using System;
 
-namespace Core.Currency.Calculator.Runtime
+namespace App.Common.Currency.Runtime.Calculator
 {
     public class CurrencyCalculator : ICurrencyCalculator
     {

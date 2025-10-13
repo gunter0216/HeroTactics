@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using App.Core.Army.Runtime;
+using App.Core.Army.Runtime.Units;
 
-namespace App.Menu.UI.External
+namespace App.Core.Army.Runtime
 {
     public interface IArmyController
     {

@@ -1,6 +1,6 @@
-﻿using App.Menu.UI.External.Model;
+﻿using App.Core.Units.Runtime.Model;
 
-namespace App.Core.Army.Runtime
+namespace App.Core.Army.Runtime.Units
 {
     public class ArmyUnit
     {

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using App.Common.DataContainer.Runtime.Data;
 using Newtonsoft.Json;
 
-namespace App.Core.Unts.Runtime.Data
+namespace App.Core.Units.Runtime.Data
 {
     [Serializable]
     [JsonObject(MemberSerialization.Fields)]

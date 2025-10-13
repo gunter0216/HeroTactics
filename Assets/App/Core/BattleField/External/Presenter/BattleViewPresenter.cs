@@ -1,9 +1,9 @@
-﻿using App.Core.BattleField.External.View;
-using App.Core.Field.External.View;
-using App.Menu.UI.External.Fabric;
+﻿using App.Core.BattleField.External.Fabric;
+using App.Core.BattleField.External.View;
+using App.Core.BattleField.External.View.Field;
 using UnityEngine;
 
-namespace App.Battle.UI.External.Presenter
+namespace App.Core.BattleField.External.Presenter
 {
     public class BattleViewPresenter
     {

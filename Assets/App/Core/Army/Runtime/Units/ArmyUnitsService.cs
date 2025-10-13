@@ -2,9 +2,9 @@
 using App.Common.Logger.Runtime;
 using App.Core.Army.Runtime.Config;
 using App.Core.Army.Runtime.Data;
-using App.Menu.UI.External;
+using App.Core.Units.Runtime;
 
-namespace App.Core.Army.Runtime
+namespace App.Core.Army.Runtime.Units
 {
     public class ArmyUnitsService
     {

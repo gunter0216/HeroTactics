@@ -1,10 +1,10 @@
 ﻿using App.Common.FSM.External;
+using App.Core.Menu.Runtime.Data;
 using App.Core.Startups.External;
 using App.Core.Startups.External.Attributes;
 using App.Core.Startups.External.Constants;
-using App.Menu.UI.External.Data;
 
-namespace App.Menu.UI.External
+namespace App.Core.Menu.External
 {
     [Configurator(ContextConstants.GlobalContext)]    
     public class GlobalMenuConfigurator : Configurator

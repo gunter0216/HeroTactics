@@ -1,14 +1,16 @@
 ﻿using System;
-using App.Battle.UI.External.Presenter;
 using App.Common.AssetSystem.Runtime;
 using App.Common.Configs.Runtime;
 using App.Common.Utilities.Utility.Runtime;
+using App.Core.Army.Runtime;
+using App.Core.BattleField.External.Battle;
+using App.Core.BattleField.External.Fabric;
+using App.Core.BattleField.External.Presenter;
 using App.Core.BattleField.Runtime.Config;
 using App.Core.BattleField.Runtime.Services;
-using App.Game.Canvases.External;
-using App.Menu.UI.External.Fabric;
+using App.Core.Canvases.External;
 
-namespace App.Menu.UI.External
+namespace App.Core.BattleField.External
 {
     public class BattleController : IInitSystem, IDisposable
     {

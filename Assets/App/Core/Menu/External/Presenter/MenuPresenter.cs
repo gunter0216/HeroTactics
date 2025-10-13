@@ -1,13 +1,14 @@
-﻿using App.Common.Logger.Runtime;
-using App.Common.SceneControllers.Runtime;
-using App.Game.Settings.Runtime;
-using App.Game.Utility.Runtime.MenuSM;
-using App.Menu.UI.Runtime;
-using App.Menu.UI.Runtime.Data;
-using App.Menu.UI.Runtime.States;
-using App.Menu.UI.Runtime.View;
+﻿using App.Common.SceneControllers.Runtime;
+using App.Common.Utilities.Utility.Runtime.FSM;
+using App.Core.Menu.External.States.MainMenu;
+using App.Core.Menu.External.States.Multiplayer;
+using App.Core.Menu.External.States.Settings;
+using App.Core.Menu.External.States.Singleplayer;
+using App.Core.Menu.External.View;
+using App.Core.Menu.Runtime;
+using App.Core.Menu.Runtime.Data;
 
-namespace App.Menu.UI.External.Presenter
+namespace App.Core.Menu.External.Presenter
 {
     public class MenuPresenter
     {

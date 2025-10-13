@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using App.Common.Data.Runtime;
-using App.Common.Data.Runtime.Attributes;
-using App.Menu.UI.Runtime.Data;
 using Newtonsoft.Json;
 
-namespace App.Menu.UI.External.Data
+namespace App.Core.Menu.Runtime.Data
 {
     [Serializable]
     [JsonObject(MemberSerialization.Fields)]

@@ -1,8 +1,8 @@
 ﻿using App.Common.DataContainer.Runtime;
 using App.Core.Units.Runtime.Config;
-using App.Core.Unts.Runtime.Data;
+using App.Core.Units.Runtime.Data;
 
-namespace App.Menu.UI.External.Model
+namespace App.Core.Units.Runtime.Model
 {
     public class Unit
     {

@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using App.Common.Algorithms.Matrix;
 using App.Common.Algorithms.Runtime;
-using App.Common.Logger.Runtime;
 using App.Common.Utilities.Utility.Runtime;
 
-namespace App.Game.DungeonGenerator.Runtime.PathFinders
+namespace App.Core.BattleField.External.Path
 {
     public class HexagonPathService
     {

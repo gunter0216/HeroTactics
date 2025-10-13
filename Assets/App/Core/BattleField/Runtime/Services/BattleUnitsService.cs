@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
+using App.Core.Army.Runtime;
 using App.Core.BattleField.Runtime.Units;
-using App.Menu.UI.External;
 
 namespace App.Core.BattleField.Runtime.Services
 {

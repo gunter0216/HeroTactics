@@ -1,4 +1,6 @@
-﻿namespace App.Core.BattleField.Runtime.Config
+﻿using App.Core.BattleField.Runtime.Dto;
+
+namespace App.Core.BattleField.Runtime.Model
 {
     public class BattleInfoConfig
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace App.Core.Unts.Runtime.Data
+namespace App.Core.Units.Runtime.Data
 {
     [Serializable]
     [JsonObject(MemberSerialization.Fields)]

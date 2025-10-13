@@ -4,12 +4,11 @@ using App.Common.Data.Runtime;
 using App.Common.Logger.Runtime;
 using App.Common.SceneControllers.Runtime;
 using App.Common.Utilities.Utility.Runtime;
-using App.Game.Canvases.External;
-using App.Menu.UI.External.Data;
-using App.Menu.UI.External.Presenter;
-using App.Menu.UI.Runtime.Data;
+using App.Core.Canvases.External;
+using App.Core.Menu.External.Presenter;
+using App.Core.Menu.Runtime.Data;
 
-namespace App.Menu.UI.External
+namespace App.Core.Menu.External
 {
     public class MenuController : IInitSystem, IDisposable
     {

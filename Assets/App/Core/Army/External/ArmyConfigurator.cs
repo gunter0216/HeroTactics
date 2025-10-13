@@ -4,7 +4,7 @@ using App.Core.Startups.External;
 using App.Core.Startups.External.Attributes;
 using App.Core.Startups.External.Constants;
 
-namespace App.Menu.UI.External
+namespace App.Core.Army.External
 {
     [Configurator(ContextConstants.GlobalContext)]    
     public class GlobalArmyConfigurator : Configurator

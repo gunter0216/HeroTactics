@@ -2,9 +2,9 @@
 using App.Common.Logger.Runtime;
 using App.Common.Utilities.Utility.Runtime;
 using App.Core.BattleField.External.View;
-using App.Game.Canvases.External;
+using App.Core.Canvases.External;
 
-namespace App.Menu.UI.External.Fabric
+namespace App.Core.BattleField.External.Fabric
 {
     public class BattleViewCreator
     {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using App.Core.BattleField.Runtime.Dto;
 
-namespace App.Core.BattleField.Runtime.Config
+namespace App.Core.BattleField.Runtime.Model
 {
     public class BattleConfig
     {

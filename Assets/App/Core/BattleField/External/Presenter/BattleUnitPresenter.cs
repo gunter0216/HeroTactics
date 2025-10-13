@@ -2,7 +2,7 @@
 using UnityEngine;
 using Vector2Int = App.Common.Algorithms.Runtime.Vector2Int;
 
-namespace App.Battle.UI.External.Presenter
+namespace App.Core.BattleField.External.Presenter
 {
     public class BattleUnitPresenter
     {

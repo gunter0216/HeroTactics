@@ -2,10 +2,10 @@
 using App.Common.Logger.Runtime;
 using App.Common.Utilities.Utility.Runtime;
 using App.Core.Units.Runtime.Config;
-using App.Core.Unts.Runtime.Data;
-using App.Menu.UI.External.Model;
+using App.Core.Units.Runtime.Data;
+using App.Core.Units.Runtime.Model;
 
-namespace App.Menu.UI.External.Services
+namespace App.Core.Units.Runtime.Services
 {
     public class UnitsService
     {

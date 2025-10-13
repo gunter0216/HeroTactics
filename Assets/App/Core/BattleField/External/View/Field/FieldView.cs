@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace App.Core.Field.External.View
+namespace App.Core.BattleField.External.View.Field
 {
     public class FieldView : MonoBehaviour
     {

@@ -1,8 +1,7 @@
 ﻿using App.Common.Data.Runtime;
 using App.Common.Logger.Runtime;
-using App.Menu.UI.Runtime.Data;
 
-namespace App.Menu.UI.External.Data
+namespace App.Core.Menu.Runtime.Data
 {
     public class GameRecordsDataLoader : IGameRecordsDataLoader
     {

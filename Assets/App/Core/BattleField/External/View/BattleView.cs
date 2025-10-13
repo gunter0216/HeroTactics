@@ -1,4 +1,4 @@
-﻿using App.Core.Field.External.View;
+﻿using App.Core.BattleField.External.View.Field;
 using UnityEngine;
 
 namespace App.Core.BattleField.External.View

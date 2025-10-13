@@ -1,8 +1,8 @@
 ﻿using System;
-using App.Game.Utility.Runtime.MenuSM;
-using App.Menu.UI.Runtime.View.Panels;
+using App.Common.Utilities.Utility.Runtime.FSM;
+using App.Core.Menu.External.View.Panels.Multiplayer;
 
-namespace App.Menu.UI.Runtime.States
+namespace App.Core.Menu.External.States.Multiplayer
 {
     public class MultiplayerState : IState, IDisposable
     {

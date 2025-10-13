@@ -1,9 +1,10 @@
 ﻿using System;
 using App.Common.Logger.Runtime;
-using App.Game.Utility.Runtime.MenuSM;
-using App.Menu.UI.Runtime.View.Panels;
+using App.Common.Utilities.Utility.Runtime.FSM;
+using App.Core.Menu.External.View.Panels;
+using App.Core.Menu.Runtime;
 
-namespace App.Menu.UI.Runtime.States
+namespace App.Core.Menu.External.States.Singleplayer
 {
     public class CreateGameState : IState, IDisposable
     {

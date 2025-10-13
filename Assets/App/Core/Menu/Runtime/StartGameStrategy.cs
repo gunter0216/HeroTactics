@@ -1,8 +1,8 @@
 ﻿using App.Common.SceneControllers.Runtime;
 using App.Common.Timer.Runtime;
-using App.Menu.UI.Runtime.Data;
+using App.Core.Menu.Runtime.Data;
 
-namespace App.Menu.UI.Runtime
+namespace App.Core.Menu.Runtime
 {
     public class StartGameStrategy : IStartGameStrategy
     {

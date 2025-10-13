@@ -2,9 +2,9 @@
 using App.Core.Startups.External;
 using App.Core.Startups.External.Attributes;
 using App.Core.Startups.External.Constants;
-using App.Core.Unts.Runtime.Data;
+using App.Core.Units.Runtime.Data;
 
-namespace App.Menu.UI.External
+namespace App.Core.Units.External
 {
     [Configurator(ContextConstants.GlobalContext)]    
     public class GlobalUnitsConfigurator : Configurator

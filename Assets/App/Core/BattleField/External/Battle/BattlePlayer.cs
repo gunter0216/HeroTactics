@@ -1,18 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using App.Battle.UI.External.Presenter;
 using App.Common.Algorithms.Matrix;
 using App.Common.AssetSystem.Runtime;
 using App.Common.Utilities.External;
 using App.Common.Utilities.Utility.Runtime;
+using App.Core.BattleField.External.Path;
+using App.Core.BattleField.External.Presenter;
 using App.Core.BattleField.Runtime.Config;
 using App.Core.BattleField.Runtime.Services;
 using App.Core.BattleField.Runtime.Units;
-using App.Game.DungeonGenerator.Runtime.PathFinders;
 using UnityEngine;
 using Vector2Int = App.Common.Algorithms.Runtime.Vector2Int;
 
-namespace App.Menu.UI.External
+namespace App.Core.BattleField.External.Battle
 {
     public class BattlePlayer
     {

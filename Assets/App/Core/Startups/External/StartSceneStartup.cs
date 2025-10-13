@@ -1,8 +1,8 @@
 ﻿using App.Common.FSM.External;
 using App.Common.FSM.Runtime;
 using App.Common.Utilities.Utility.Runtime;
+using App.Core.Canvases.External;
 using App.Core.Startups.External.Constants;
-using App.Game.Canvases.External;
 using UnityEngine;
 using Zenject;
 

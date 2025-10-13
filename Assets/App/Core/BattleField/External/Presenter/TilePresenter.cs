@@ -1,7 +1,7 @@
 ﻿using System;
-using App.Core.Field.External.View;
+using App.Core.BattleField.External.View.Field;
 
-namespace App.Menu.UI.External
+namespace App.Core.BattleField.External.Presenter
 {
     public class TilePresenter
     {

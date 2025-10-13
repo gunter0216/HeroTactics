@@ -1,7 +1,8 @@
 ﻿using System;
-using App.Game.Utility.Runtime.MenuSM;
+using App.Common.Utilities.Utility.Runtime.FSM;
+using App.Core.Menu.External.View.Panels;
 
-namespace App.Game.Settings.Runtime
+namespace App.Core.Menu.External.States.Settings
 {
     public class SettingsState : IState, IDisposable
     {

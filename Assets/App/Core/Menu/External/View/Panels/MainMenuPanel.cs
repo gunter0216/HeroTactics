@@ -2,7 +2,7 @@
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace App.Menu.UI.Runtime.View.Panels
+namespace App.Core.Menu.External.View.Panels
 {
     public class MainMenuPanel : MonoBehaviour
     {

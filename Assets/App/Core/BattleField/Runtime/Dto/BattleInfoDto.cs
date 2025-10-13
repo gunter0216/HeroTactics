@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace App.Core.BattleField.Runtime.Config
+namespace App.Core.BattleField.Runtime.Dto
 {
     [Serializable]
     [JsonObject(MemberSerialization.Fields)]

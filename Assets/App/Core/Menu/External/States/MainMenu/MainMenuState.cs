@@ -1,10 +1,12 @@
 ﻿using System;
-using App.Game.Settings.Runtime;
-using App.Game.Utility.Runtime.MenuSM;
-using App.Menu.UI.Runtime.View.Panels;
+using App.Common.Utilities.Utility.Runtime.FSM;
+using App.Core.Menu.External.States.Multiplayer;
+using App.Core.Menu.External.States.Settings;
+using App.Core.Menu.External.States.Singleplayer;
+using App.Core.Menu.External.View.Panels;
 using UnityEngine;
 
-namespace App.Menu.UI.Runtime.States
+namespace App.Core.Menu.External.States.MainMenu
 {
     public class MainMenuState : IState, IDisposable
     {

@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace App.Core.Field.External.View
+namespace App.Core.BattleField.External.View.Field
 {
     public class TileView : MonoBehaviour, IPointerClickHandler
     {

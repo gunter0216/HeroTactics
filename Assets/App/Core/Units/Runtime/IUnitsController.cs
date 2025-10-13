@@ -1,8 +1,8 @@
 ﻿using App.Common.DataContainer.Runtime;
 using App.Common.Utilities.Utility.Runtime;
-using App.Menu.UI.External.Model;
+using App.Core.Units.Runtime.Model;
 
-namespace App.Menu.UI.External
+namespace App.Core.Units.Runtime
 {
     public interface IUnitsController
     {

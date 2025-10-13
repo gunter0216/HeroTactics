@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace App.Game.Canvases.External
+namespace App.Core.Canvases.External
 {
     public class PopupCanvas : MonoBehaviour, ICanvas
     {

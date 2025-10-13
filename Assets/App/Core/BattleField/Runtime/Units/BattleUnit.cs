@@ -1,4 +1,5 @@
 ﻿using App.Core.Army.Runtime;
+using App.Core.Army.Runtime.Units;
 
 namespace App.Core.BattleField.Runtime.Units
 {

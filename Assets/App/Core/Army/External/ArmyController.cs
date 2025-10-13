@@ -6,8 +6,10 @@ using App.Common.Utilities.Utility.Runtime;
 using App.Core.Army.Runtime;
 using App.Core.Army.Runtime.Config;
 using App.Core.Army.Runtime.Data;
+using App.Core.Army.Runtime.Units;
+using App.Core.Units.Runtime;
 
-namespace App.Menu.UI.External
+namespace App.Core.Army.External
 {
     public class ArmyController : IInitSystem, IDisposable, IArmyController
     {

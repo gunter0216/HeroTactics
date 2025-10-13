@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using App.Common.Configs.Runtime;
 using App.Common.Logger.Runtime;
+using App.Core.BattleField.Runtime.Model;
 
 namespace App.Core.BattleField.Runtime.Config
 {
