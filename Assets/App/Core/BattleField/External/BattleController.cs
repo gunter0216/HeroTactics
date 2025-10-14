@@ -48,7 +48,7 @@ namespace App.Core.BattleField.External
 
             m_BattlePlayer = new BattlePlayer(m_BattleUnitsService, m_Presenter, m_AssetManager, m_ConfigController);
             m_BattlePlayer.Initialize();
-            m_BattlePlayer.StartBattle();
+            m_BattlePlayer.StartBattle("battle_001");
         }
 
         public void Dispose()

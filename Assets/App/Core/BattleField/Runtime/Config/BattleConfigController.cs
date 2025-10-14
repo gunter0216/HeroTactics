@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using App.Common.Configs.Runtime;
 using App.Common.Logger.Runtime;
+using App.Common.Utilities.Utility.Runtime;
 using App.Core.BattleField.Runtime.Model;
 
 namespace App.Core.BattleField.Runtime.Config
@@ -9,7 +10,9 @@ namespace App.Core.BattleField.Runtime.Config
     public class BattleConfigController
     {
         private readonly IConfigLoader m_ConfigLoader;
-        private BattleConfig m_BattleConfig;
+        private BattlesConfig m_BattlesConfig;
+
+        private Dictionary<string, BattleConfig> m_Battles;
 
         public BattleConfigController(IConfigLoader configLoader)
         {
@@ -25,22 +28,37 @@ namespace App.Core.BattleField.Runtime.Config
                 return;
             }
 
-            m_BattleConfig = new BattleConfig(dto.Value);
+            m_BattlesConfig = new BattlesConfig(dto.Value);
+            m_Battles = new Dictionary<string, BattleConfig>(m_BattlesConfig.Battles.Count);
+            foreach (var battle in m_BattlesConfig.Battles)
+            {
+                m_Battles[battle.Key] = battle;
+            }
         }
 
-        public int GetWidth() => m_BattleConfig.Width;
-        public int GetHeight() => m_BattleConfig.Height;
-        public IReadOnlyList<BattleInfoConfig> GetBattles() => m_BattleConfig.Battles;
+        public int GetWidth() => m_BattlesConfig.Width;
+        public int GetHeight() => m_BattlesConfig.Height;
+        
+        public Optional<BattleConfig> GetBattle(string key)
+        {
+            if (m_Battles.TryGetValue(key, out var battle))
+            {
+                return Optional<BattleConfig>.Success(battle);
+            }
+
+            return Optional<BattleConfig>.Fail();
+        }
+        
         public IReadOnlyList<int> GetUnitPositions(int unitsCount)
         {
             var index = unitsCount - 1;
-            if (index < 0 || index >= m_BattleConfig.UnitPositions.Length)
+            if (index < 0 || index >= m_BattlesConfig.UnitPositions.Length)
             {
                 HLogger.LogError("Invalid units count: " + unitsCount);
                 return Array.Empty<int>();
             }
             
-            return m_BattleConfig.UnitPositions[index];
+            return m_BattlesConfig.UnitPositions[index];
         }
     }
 }

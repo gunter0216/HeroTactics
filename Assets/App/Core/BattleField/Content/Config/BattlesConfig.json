@@ -12,7 +12,18 @@
   ],
   "battles": [
     {
-      "key": "battle_001"
+      "key": "battle_001",
+      "units": [
+        {
+          "key": "Skeleton"
+        },
+        {
+          "key": "Skeleton"
+        },
+        {
+          "key": "Skeleton"
+        }
+      ]
     }
   ]
 }

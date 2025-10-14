@@ -6,7 +6,7 @@ namespace App.Core.BattleField.Runtime.Config
 {
     public class BattleConfigLoader
     {
-        private const string m_ConfigKey = "BattleConfig";
+        private const string m_ConfigKey = "BattlesConfig";
         private readonly IConfigLoader m_ConfigLoader;
 
         public BattleConfigLoader(IConfigLoader configLoader)

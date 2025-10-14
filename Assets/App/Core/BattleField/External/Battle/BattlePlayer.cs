@@ -23,11 +23,11 @@ namespace App.Core.BattleField.External.Battle
         private readonly BattleViewPresenter m_BattleViewPresenter;
         private readonly IAssetManager m_AssetManager;
 
-        private List<BattleUnitPresenter> m_Units;
-        private Matrix<TilePresenter> m_Matrix;
-        private Matrix<int> m_CollidersMatrix;
-        private HexagonPathService m_HexagonPathService = new();
-        private Matrix<int> m_LiMatrix;
+        private PlaceUnitsStrategy m_PlaceUnitsStrategy;
+        private HexagonPathService m_HexagonPathService;
+        private StartBattleStrategy m_StartBattleStrategy;
+
+        private Battle m_Battle;
 
         public BattlePlayer(
             BattleUnitsService battleUnitsService, 
@@ -43,31 +43,35 @@ namespace App.Core.BattleField.External.Battle
 
         public void Initialize()
         {
-            var view = m_BattleViewPresenter.GetFieldView();
-            var width = m_ConfigController.GetWidth();
-            var height = m_ConfigController.GetHeight();
-            m_Matrix = new Matrix<TilePresenter>(width, height);
-            for (int row = 0; row < view.RowViews.Length; ++row)
+            m_PlaceUnitsStrategy = new PlaceUnitsStrategy(m_BattleViewPresenter, m_ConfigController);
+            m_HexagonPathService = new HexagonPathService();
+            m_StartBattleStrategy = new StartBattleStrategy(
+                m_BattleUnitsService, 
+                m_BattleViewPresenter,
+                m_AssetManager,
+                m_ConfigController,
+                OnTileClick);
+        }
+
+        public void StartBattle(string battleKey)
+        {
+            var battle = m_StartBattleStrategy.StartBattle(battleKey);
+            if (!battle.HasValue)
             {
-                var rowView = view.RowViews[row];
-                for (int col = 0; col < rowView.TileViews.Length; ++col)
-                {
-                    var colView = rowView.TileViews[col];
-                    var presenter = new TilePresenter(colView, col, row, OnTileClick);
-                    presenter.Initialize();
-                    m_Matrix[row, col] = presenter;
-                }
+                HLogger.LogError("Failed to start battle: " + battleKey);
+                return;
             }
             
-            m_CollidersMatrix = new Matrix<int>(width, height);
-            m_CollidersMatrix.Fill(HexagonPathService.Empty);
+            m_Battle = battle.Value;
+
+            TestMatrix();
         }
 
         private void OnTileClick(TilePresenter presenter)
         {
-            var unit = m_Units.First();
+            var unit = m_Battle.Units.First();
             var to = new Vector2Int(presenter.X, presenter.Y);
-            var path = m_HexagonPathService.BuildPath(m_LiMatrix, unit.Position, to);
+            var path = m_HexagonPathService.BuildPath(m_Battle.LiMatrix, unit.Position, to);
             if (!path.HasValue)
             {
                 HLogger.LogError("Failed to build path");
@@ -75,50 +79,14 @@ namespace App.Core.BattleField.External.Battle
             }
             
             unit.Position = to;
-            UpdateUnitPosition(unit);
+            m_PlaceUnitsStrategy.UpdateUnitPosition(unit);
             TestMatrix();
-        }
-
-        public void StartBattle()
-        {
-            var battleArmy = m_BattleUnitsService.CreatePlayerBattleArmy();
-            m_Units = new List<BattleUnitPresenter>(battleArmy.Count);
-            foreach (var battleUnit in battleArmy)
-            {
-                var view = CreateView(battleUnit);
-                if (!view.HasValue)
-                {
-                    Debug.LogError("Failed to create unit view");
-                    continue;
-                }
-                
-                var unitPresenter = new BattleUnitPresenter(battleUnit, view.Value);
-                m_Units.Add(unitPresenter);
-            }
-
-            PlaceUnits();
-            
-            GlobalCoroutineProvider.DoCoroutine(UpdateUnitPositions());
-
-            TestMatrix();
-        }
-
-        private void PlaceUnits()
-        {
-            var positions = m_ConfigController.GetUnitPositions(m_Units.Count);
-            m_Units.Sort((x, y) => x.Unit.Unit.Position.CompareTo(y.Unit.Unit.Position));
-            for (int i = 0; i < m_Units.Count; ++i)
-            {
-                var unit = m_Units[i];
-                var col = positions[i];
-                unit.Position = new Vector2Int(2, col);
-            }
         }
 
         private void TestMatrix()
         {
             var colliderMatrix = CreateCollidersMatrix();
-            var unit = m_Units.First();
+            var unit = m_Battle.Units.First();
             var liMatrixOpt = m_HexagonPathService.CreateLiMatrix(colliderMatrix, unit.Position, 5);
             if (!liMatrixOpt.HasValue)
             {
@@ -126,13 +94,13 @@ namespace App.Core.BattleField.External.Battle
                 return;
             }
 
-            m_LiMatrix = liMatrixOpt.Value;
-            for (int row = 0; row < m_LiMatrix.Height; ++row)
+            m_Battle.LiMatrix = liMatrixOpt.Value;
+            for (int row = 0; row < m_Battle.LiMatrix.Height; ++row)
             {
-                for (int col = 0; col < m_LiMatrix.Width; ++col)
+                for (int col = 0; col < m_Battle.LiMatrix.Width; ++col)
                 {
-                    var cellValue = m_LiMatrix[row, col];
-                    var tile = m_Matrix[row, col];
+                    var cellValue = m_Battle.LiMatrix[row, col];
+                    var tile = m_Battle.Matrix[row, col];
                     if (cellValue <= 0)
                     {
                         tile.StayDefault();
@@ -147,38 +115,15 @@ namespace App.Core.BattleField.External.Battle
 
         private Matrix<int> CreateCollidersMatrix()
         {
-            var matrix = new Matrix<int>(m_Matrix.Width, m_Matrix.Height);
+            var matrix = new Matrix<int>(m_Battle.Matrix.Width, m_Battle.Matrix.Height);
             matrix.Fill(HexagonPathService.Empty);
-            foreach (var unit in m_Units)
+            foreach (var unit in m_Battle.Units)
             {
                 var pos = unit.Position;
                 matrix[pos.Y, pos.X] = HexagonPathService.Wall;
             }
             
             return matrix;
-        }
-
-        private IEnumerator UpdateUnitPositions()
-        {
-            yield return new WaitForEndOfFrame();
-            for (int i = 0; i < m_Units.Count; ++i)
-            {
-                var unit = m_Units[i];
-                UpdateUnitPosition(unit);
-            }
-        }
-
-        private void UpdateUnitPosition(BattleUnitPresenter unit)
-        {
-            var position = unit.Position;
-            unit.View.transform.position = m_BattleViewPresenter.GetPositionForUnit(position.Y, position.X);
-        }
-
-        public Optional<Transform> CreateView(BattleUnit unit)
-        {
-            var assetKey = unit.Unit.Unit.Config.Asset;
-            var view = m_AssetManager.InstantiateSync<Transform>(new StringKeyEvaluator(assetKey));
-            return view;
         }
     }
 }
