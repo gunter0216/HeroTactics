@@ -14,9 +14,9 @@ namespace App.Core.BattleField.Runtime.Config
             m_ConfigLoader = configLoader;
         }
 
-        public Optional<BattleDto> Load()
+        public Optional<BattlesDto> Load()
         {
-            return m_ConfigLoader.LoadConfig<BattleDto>(m_ConfigKey);
+            return m_ConfigLoader.LoadConfig<BattlesDto>(m_ConfigKey);
         }
     }
 }

@@ -7,6 +7,7 @@ namespace App.Core.BattleField.External.Battle
     public class BattleData
     {
         private List<BattleUnitPresenter> m_Units;
+        private List<BattleUnitPresenter> m_EnemyUnits;
         private Matrix<TilePresenter> m_Matrix;
         private Matrix<int> m_CollidersMatrix;
         private Matrix<int> m_LiMatrix;
@@ -47,6 +48,12 @@ namespace App.Core.BattleField.External.Battle
         {
             get => m_RoundUnits;
             set => m_RoundUnits = value;
+        }
+
+        public List<BattleUnitPresenter> EnemyUnits
+        {
+            get => m_EnemyUnits;
+            set => m_EnemyUnits = value;
         }
     }
 }

@@ -51,5 +51,11 @@ namespace App.Core.BattleField.External.Battle
             get => m_Data.RoundUnits;
             set => m_Data.RoundUnits = value;
         }
+        
+        public List<BattleUnitPresenter> EnemyUnits
+        {
+            get => m_Data.EnemyUnits;
+            set => m_Data.EnemyUnits = value;
+        }
     }
 }

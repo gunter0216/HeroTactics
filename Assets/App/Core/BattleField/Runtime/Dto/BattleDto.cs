@@ -1,6 +1,4 @@
-﻿
-using System;
-using App.Core.BattleField.Runtime.Config;
+﻿using System;
 using Newtonsoft.Json;
 
 namespace App.Core.BattleField.Runtime.Dto
@@ -9,14 +7,11 @@ namespace App.Core.BattleField.Runtime.Dto
     [JsonObject(MemberSerialization.Fields)]
     public class BattleDto
     {
-        [JsonProperty("width")] private int m_Width;
-        [JsonProperty("height")] private int m_Height;
-        [JsonProperty("unit_positions")] private int[][] m_UnitPositions;
-        [JsonProperty("battles")] private BattleInfoDto[] m_Battles;
-
-        public int Width => m_Width;
-        public int Height => m_Height;
-        public BattleInfoDto[] Battles => m_Battles;
-        public int[][] UnitPositions => m_UnitPositions;
-    }
+        [JsonProperty("key")] private string m_Key;
+        [JsonProperty("units")] private BattleUnitDto[] m_Units;
+            
+        public string Key => m_Key;
+        public BattleUnitDto[] Units => m_Units;
+    } 
 }
+

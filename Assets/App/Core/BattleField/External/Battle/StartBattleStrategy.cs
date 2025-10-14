@@ -77,20 +77,55 @@ namespace App.Core.BattleField.External.Battle
 
         private void CreateUnits(Battle battle)
         {
+            CreatePlayerUnits(battle);
+            CreateEnemyUnits(battle);
+        }
+
+        private void CreateEnemyUnits(Battle battle)
+        {
             var battleArmy = m_BattleUnitsService.CreatePlayerBattleArmy();
             battle.Units = new List<BattleUnitPresenter>(battleArmy.Count);
             foreach (var battleUnit in battleArmy)
             {
-                var view = CreateView(battleUnit);
-                if (!view.HasValue)
+                var unitPresenter = CreateUnit(battleUnit);
+                if (!unitPresenter.HasValue)
                 {
-                    HLogger.LogError("Failed to create unit view");
+                    HLogger.LogError("Failed to create unit presenter");
                     continue;
                 }
                 
-                var unitPresenter = new BattleUnitPresenter(battleUnit, view.Value);
-                battle.Units.Add(unitPresenter);
+                battle.Units.Add(unitPresenter.Value);
             }
+        }
+
+        private void CreatePlayerUnits(Battle battle)
+        {
+            var battleArmy = m_BattleUnitsService.CreatePlayerBattleArmy();
+            battle.Units = new List<BattleUnitPresenter>(battleArmy.Count);
+            foreach (var battleUnit in battleArmy)
+            {
+                var unitPresenter = CreateUnit(battleUnit);
+                if (!unitPresenter.HasValue)
+                {
+                    HLogger.LogError("Failed to create unit presenter");
+                    continue;
+                }
+                
+                battle.Units.Add(unitPresenter.Value);
+            }
+        }
+
+        private Optional<BattleUnitPresenter> CreateUnit(BattleUnit battleUnit)
+        {
+            var view = CreateView(battleUnit);
+            if (!view.HasValue)
+            {
+                HLogger.LogError("Failed to create unit view");
+                return Optional<BattleUnitPresenter>.Fail();
+            }
+                
+            var unitPresenter = new BattleUnitPresenter(battleUnit, view.Value);
+            return Optional<BattleUnitPresenter>.Success(unitPresenter);
         }
 
         private void CreateTiles(Battle battle)

@@ -15,7 +15,7 @@ namespace App.Core.BattleField.Runtime.Model
         public int[][] UnitPositions => m_UnitPositions;
         public IReadOnlyList<BattleConfig> Battles => m_Battles;
 
-        public BattlesConfig(BattleDto dto)
+        public BattlesConfig(BattlesDto dto)
         {
             m_Width = dto.Width;
             m_Height = dto.Height;
