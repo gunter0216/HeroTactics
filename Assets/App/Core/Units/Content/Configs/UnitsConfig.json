@@ -3,7 +3,7 @@
     {
       "key": "Skeleton",
       "asset": "Skeleton",
-      "priority": 1,
+      "initiative": 1,
       "attack": 10,
       "speed": 5,
       "health": 30,
@@ -13,7 +13,7 @@
     {
       "key": "Halberdier",
       "asset": "Halberdier",
-      "priority": 1,
+      "initiative": 1,
       "attack": 12,
       "speed": 4,
       "health": 35,
@@ -23,7 +23,7 @@
     {
       "key": "Marksman",
       "asset": "Marksman",
-      "priority": 2,
+      "initiative": 2,
       "attack": 15,
       "speed": 6,
       "health": 25,
@@ -33,7 +33,7 @@
     {
       "key": "Halfling",
       "asset": "Halfling",
-      "priority": 1,
+      "initiative": 1,
       "attack": 8,
       "speed": 7,
       "health": 20,
@@ -43,7 +43,7 @@
     {
       "key": "Rogue",
       "asset": "Rogue",
-      "priority": 1,
+      "initiative": 1,
       "attack": 11,
       "speed": 8,
       "health": 22,

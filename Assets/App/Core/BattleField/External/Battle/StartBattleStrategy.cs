@@ -111,7 +111,7 @@ namespace App.Core.BattleField.External.Battle
                     continue;
                 }
                 
-                battle.Units.Add(unitPresenter.Value);
+                battle.EnemyUnits.Add(unitPresenter.Value);
             }
         }
 

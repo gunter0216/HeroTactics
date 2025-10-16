@@ -9,7 +9,7 @@ namespace App.Core.Units.Runtime.Dto
     {
         [JsonProperty("key")] private string m_Key;
         [JsonProperty("asset")] private string m_Asset;
-        [JsonProperty("priority")] private int m_Priority;
+        [JsonProperty("initiative")] private int m_Initiative;
         [JsonProperty("attack")] private int m_Attack;
         [JsonProperty("speed")] private int m_Speed;
         [JsonProperty("health")] private int m_Health;
@@ -18,7 +18,7 @@ namespace App.Core.Units.Runtime.Dto
 
         public string Key => m_Key;
         public string Asset => m_Asset;
-        public int Priority => m_Priority;
+        public int Initiative => m_Initiative;
         public int Attack => m_Attack;
         public int Speed => m_Speed;
         public int Health => m_Health;

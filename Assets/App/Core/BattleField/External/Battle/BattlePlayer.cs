@@ -123,6 +123,12 @@ namespace App.Core.BattleField.External.Battle
                 matrix[pos.Y, pos.X] = HexagonPathService.Wall;
             }
             
+            foreach (var unit in m_Battle.EnemyUnits)
+            {
+                var pos = unit.Position;
+                matrix[pos.Y, pos.X] = HexagonPathService.Wall;
+            }
+            
             return matrix;
         }
     }
