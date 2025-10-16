@@ -1,16 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using App.Common.Algorithms.Matrix;
 using App.Common.AssetSystem.Runtime;
 using App.Common.Logger.Runtime;
-using App.Common.Utilities.External;
-using App.Common.Utilities.Utility.Runtime;
 using App.Core.BattleField.External.Path;
 using App.Core.BattleField.External.Presenter;
 using App.Core.BattleField.Runtime.Config;
 using App.Core.BattleField.Runtime.Services;
-using App.Core.BattleField.Runtime.Units;
 using UnityEngine;
 using Vector2Int = App.Common.Algorithms.Runtime.Vector2Int;
 
@@ -26,6 +21,7 @@ namespace App.Core.BattleField.External.Battle
         private UpdateUnitPositionsStrategy m_UpdateUnitPositionsStrategy;
         private HexagonPathService m_HexagonPathService;
         private StartBattleStrategy m_StartBattleStrategy;
+        private RoundUnitsService m_RoundUnitsService;
 
         private Battle m_Battle;
 
@@ -63,8 +59,16 @@ namespace App.Core.BattleField.External.Battle
             }
             
             m_Battle = battle.Value;
+            
+            m_RoundUnitsService = new RoundUnitsService(m_Battle);
+            PlayBattle();
 
-            TestMatrix();
+            // TestMatrix();
+        }
+
+        private void PlayBattle()
+        {
+            m_RoundUnitsService.PrepareRoundUnits();
         }
 
         private void OnTileClick(TilePresenter presenter)
