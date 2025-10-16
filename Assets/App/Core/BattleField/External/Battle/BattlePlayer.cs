@@ -69,6 +69,16 @@ namespace App.Core.BattleField.External.Battle
         private void PlayBattle()
         {
             m_RoundUnitsService.PrepareRoundUnits();
+            NextRound();
+            
+            TestMatrix();
+        }
+
+        private void NextRound()
+        {
+            m_Battle.Round += 1;
+            var units = m_Battle.RoundUnits;
+            m_BattleViewPresenter.ShowRoundUnits(units);
         }
 
         private void OnTileClick(TilePresenter presenter)

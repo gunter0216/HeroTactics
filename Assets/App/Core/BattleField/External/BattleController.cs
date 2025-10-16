@@ -1,6 +1,7 @@
 ﻿using System;
 using App.Common.AssetSystem.Runtime;
 using App.Common.Configs.Runtime;
+using App.Common.SpriteLoaders.Runtime;
 using App.Common.Utilities.Utility.Runtime;
 using App.Core.Army.Runtime;
 using App.Core.BattleField.External.Battle;
@@ -20,6 +21,7 @@ namespace App.Core.BattleField.External
         private readonly IArmyController m_ArmyController;
         private readonly IConfigLoader m_ConfigLoader;
         private readonly IUnitsController m_UnitsController;
+        private readonly ISpriteLoader m_SpriteLoader;
 
         private BattleViewPresenter m_Presenter;
         private BattleUnitsService m_BattleUnitsService;
@@ -31,13 +33,15 @@ namespace App.Core.BattleField.External
             IAssetManager assetManager, 
             IArmyController armyController, 
             IConfigLoader configLoader,
-            IUnitsController unitsController)
+            IUnitsController unitsController, 
+            ISpriteLoader spriteLoader)
         {
             m_MainCanvas = mainCanvas;
             m_AssetManager = assetManager;
             m_ArmyController = armyController;
             m_ConfigLoader = configLoader;
             m_UnitsController = unitsController;
+            m_SpriteLoader = spriteLoader;
         }
 
         public void Init()
@@ -45,7 +49,9 @@ namespace App.Core.BattleField.External
             m_ConfigController = new BattleConfigController(m_ConfigLoader);
             m_ConfigController.Initialize();
             
-            m_Presenter = new BattleViewPresenter(new BattleViewCreator(m_AssetManager, m_MainCanvas));
+            m_Presenter = new BattleViewPresenter(
+                new BattleViewCreator(m_AssetManager, m_MainCanvas),
+                m_SpriteLoader);
             m_Presenter.Initialize();
 
             m_BattleUnitsService = new BattleUnitsService(

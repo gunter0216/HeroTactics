@@ -6,6 +6,7 @@ namespace App.Core.Units.Runtime.Config
     {
         private readonly string m_Key;
         private readonly string m_Asset;
+        private readonly string m_IconKey;
         private readonly int m_Initiative;
         private readonly int m_Attack;
         private readonly int m_Speed;
@@ -15,6 +16,7 @@ namespace App.Core.Units.Runtime.Config
 
         public string Key => m_Key;
         public string Asset => m_Asset;
+        public string IconKey => m_IconKey;
         public int Initiative => m_Initiative;
         public int Attack => m_Attack;
         public int Speed => m_Speed;
@@ -26,6 +28,7 @@ namespace App.Core.Units.Runtime.Config
         {
             m_Key = unitDto.Key;
             m_Asset = unitDto.Asset;
+            m_IconKey = unitDto.IconKey;
             m_Initiative = unitDto.Initiative;
             m_Attack = unitDto.Attack;
             m_Speed = unitDto.Speed;

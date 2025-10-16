@@ -27,6 +27,7 @@ namespace App.Core.Army.Runtime.Data
             }
 
             m_Data = data.Value;
+            m_Data.Army = null; // todo
             m_Data.Army ??= Array.Empty<ArmyUnitData>();
         }
         

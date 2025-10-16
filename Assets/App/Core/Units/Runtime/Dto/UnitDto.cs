@@ -15,6 +15,7 @@ namespace App.Core.Units.Runtime.Dto
         [JsonProperty("health")] private int m_Health;
         [JsonProperty("damage")] private int m_Damage;
         [JsonProperty("armor")] private int m_Armor;
+        [JsonProperty("icon_key")] private string m_IconKey;
 
         public string Key => m_Key;
         public string Asset => m_Asset;
@@ -24,5 +25,6 @@ namespace App.Core.Units.Runtime.Dto
         public int Health => m_Health;
         public int Damage => m_Damage;
         public int Armor => m_Armor;
+        public string IconKey => m_IconKey;
     }
 }
