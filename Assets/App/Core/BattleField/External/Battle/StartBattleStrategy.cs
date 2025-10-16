@@ -22,7 +22,7 @@ namespace App.Core.BattleField.External.Battle
         
         private event Action<TilePresenter> m_TileClickCallback;
 
-        private PlaceUnitsStrategy m_PlaceUnitsStrategy;
+        private UpdateUnitPositionsStrategy m_UpdateUnitPositionsStrategy;
 
         public StartBattleStrategy(
             BattleUnitsService battleUnitsService, 
@@ -40,7 +40,7 @@ namespace App.Core.BattleField.External.Battle
 
         public Optional<Battle> StartBattle(string battleKey)
         {
-            m_PlaceUnitsStrategy ??= new PlaceUnitsStrategy(m_BattleViewPresenter, m_ConfigController);
+            m_UpdateUnitPositionsStrategy ??= new UpdateUnitPositionsStrategy(m_BattleViewPresenter, m_ConfigController);
             
             var battleOpt = CreateBattle(battleKey);
             if (!battleOpt.HasValue)
@@ -55,7 +55,7 @@ namespace App.Core.BattleField.External.Battle
             CreateTiles(battle);
             CreateColliderMatrix(battle);
             CreateUnits(battle);
-            PlaceUnits(battle);
+            UpdateUnitPositions(battle);
             
             return Optional<Battle>.Success(battle);
         }
@@ -81,7 +81,7 @@ namespace App.Core.BattleField.External.Battle
             CreateEnemyUnits(battle);
         }
 
-        private void CreateEnemyUnits(Battle battle)
+        private void CreatePlayerUnits(Battle battle)
         {
             var battleArmy = m_BattleUnitsService.CreatePlayerBattleArmy();
             battle.Units = new List<BattleUnitPresenter>(battleArmy.Count);
@@ -98,10 +98,10 @@ namespace App.Core.BattleField.External.Battle
             }
         }
 
-        private void CreatePlayerUnits(Battle battle)
+        private void CreateEnemyUnits(Battle battle)
         {
-            var battleArmy = m_BattleUnitsService.CreatePlayerBattleArmy();
-            battle.Units = new List<BattleUnitPresenter>(battleArmy.Count);
+            var battleArmy = m_BattleUnitsService.CreateEnemyBattleArmy(battle.Config);
+            battle.EnemyUnits = new List<BattleUnitPresenter>(battleArmy.Count);
             foreach (var battleUnit in battleArmy)
             {
                 var unitPresenter = CreateUnit(battleUnit);
@@ -148,9 +148,9 @@ namespace App.Core.BattleField.External.Battle
             }
         }
 
-        private void PlaceUnits(Battle battle)
+        private void UpdateUnitPositions(Battle battle)
         {
-            m_PlaceUnitsStrategy.PlaceUnits(battle.Units);
+            m_UpdateUnitPositionsStrategy.PlaceUnits(battle);
         }
 
         private void CreateColliderMatrix(Battle battle)
@@ -164,7 +164,7 @@ namespace App.Core.BattleField.External.Battle
 
         private Optional<Transform> CreateView(BattleUnit unit)
         {
-            var assetKey = unit.Unit.Unit.Config.Asset;
+            var assetKey = unit.Config.Asset;
             var view = m_AssetManager.InstantiateSync<Transform>(new StringKeyEvaluator(assetKey));
             return view;
         }

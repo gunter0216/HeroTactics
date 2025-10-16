@@ -1,19 +1,17 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using App.Common.Utilities.External;
 using App.Core.BattleField.External.Presenter;
 using App.Core.BattleField.Runtime.Config;
 using UnityEngine;
-using Vector2Int = App.Common.Algorithms.Runtime.Vector2Int;
 
 namespace App.Core.BattleField.External.Battle
 {
-    public class PlaceUnitsStrategy
+    public class UpdateUnitPositionsStrategy
     {
         private readonly BattleConfigController m_ConfigController;  
         private readonly BattleViewPresenter m_BattleViewPresenter;
 
-        public PlaceUnitsStrategy(
+        public UpdateUnitPositionsStrategy(
             BattleViewPresenter battleViewPresenter, 
             BattleConfigController configController)
         {
@@ -25,23 +23,20 @@ namespace App.Core.BattleField.External.Battle
         {
         }
 
-        public void PlaceUnits(IReadOnlyList<BattleUnitPresenter> units)
+        public void PlaceUnits(Battle battle)
         {
-            var positions = m_ConfigController.GetUnitPositions(units.Count);
-            for (int i = 0; i < units.Count; ++i)
-            {
-                var unit = units[i];
-                var col = positions[i];
-                unit.Position = new Vector2Int(2, col);
-            }
-
-            GlobalCoroutineProvider.DoCoroutine(UpdateUnitPositions(units));
+            GlobalCoroutineProvider.DoCoroutine(UpdateUnitPositions(battle));
         }
 
-        private IEnumerator UpdateUnitPositions(IReadOnlyList<BattleUnitPresenter> units)
+        private IEnumerator UpdateUnitPositions(Battle battle)
         {
             yield return new WaitForEndOfFrame();
-            foreach (var unit in units)
+            foreach (var unit in battle.Units)
+            {
+                UpdateUnitPosition(unit);
+            }
+
+            foreach (var unit in battle.EnemyUnits)
             {
                 UpdateUnitPosition(unit);
             }

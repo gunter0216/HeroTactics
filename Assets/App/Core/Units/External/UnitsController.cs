@@ -52,6 +52,11 @@ namespace App.Core.Units.External
             return m_UnitsService.GetUnit(dataReference);
         }
 
+        public Optional<UnitConfig> GetUnitConfig(string key)
+        {
+            return m_ConfigController.GetUnitConfig(key);
+        }
+
         public void Dispose()
         {
         }

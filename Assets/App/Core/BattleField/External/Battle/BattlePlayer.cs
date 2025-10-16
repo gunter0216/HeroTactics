@@ -23,7 +23,7 @@ namespace App.Core.BattleField.External.Battle
         private readonly BattleViewPresenter m_BattleViewPresenter;
         private readonly IAssetManager m_AssetManager;
 
-        private PlaceUnitsStrategy m_PlaceUnitsStrategy;
+        private UpdateUnitPositionsStrategy m_UpdateUnitPositionsStrategy;
         private HexagonPathService m_HexagonPathService;
         private StartBattleStrategy m_StartBattleStrategy;
 
@@ -43,7 +43,7 @@ namespace App.Core.BattleField.External.Battle
 
         public void Initialize()
         {
-            m_PlaceUnitsStrategy = new PlaceUnitsStrategy(m_BattleViewPresenter, m_ConfigController);
+            m_UpdateUnitPositionsStrategy = new UpdateUnitPositionsStrategy(m_BattleViewPresenter, m_ConfigController);
             m_HexagonPathService = new HexagonPathService();
             m_StartBattleStrategy = new StartBattleStrategy(
                 m_BattleUnitsService, 
@@ -79,7 +79,7 @@ namespace App.Core.BattleField.External.Battle
             }
             
             unit.Position = to;
-            m_PlaceUnitsStrategy.UpdateUnitPosition(unit);
+            m_UpdateUnitPositionsStrategy.UpdateUnitPosition(unit);
             TestMatrix();
         }
 

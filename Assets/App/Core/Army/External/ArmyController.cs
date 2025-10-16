@@ -8,6 +8,7 @@ using App.Core.Army.Runtime.Config;
 using App.Core.Army.Runtime.Data;
 using App.Core.Army.Runtime.Units;
 using App.Core.Units.Runtime;
+using App.Core.Units.Runtime.Config;
 
 namespace App.Core.Army.External
 {

@@ -57,5 +57,7 @@ namespace App.Core.BattleField.External.Battle
             get => m_Data.EnemyUnits;
             set => m_Data.EnemyUnits = value;
         }
+
+        public BattleConfig Config => m_Config;
     }
 }

@@ -8,16 +8,14 @@ namespace App.Core.BattleField.External.Presenter
     {
         private readonly BattleUnit m_Unit;
         private readonly Transform m_View;
-        
-        private Vector2Int m_Position;
 
         public BattleUnit Unit => m_Unit;
         public Transform View => m_View;
 
         public Vector2Int Position
         {
-            get => m_Position;
-            set => m_Position = value;
+            get => m_Unit.Data.Position;
+            set => m_Unit.Data.Position = value;
         }
 
         public BattleUnitPresenter(BattleUnit unit, Transform view)
